@@ -30,7 +30,7 @@ class InternalIPKernel(object):
         
         # This application will also act on the shell user namespace
         self.namespace = self.ipkernel.shell.user_ns
-
+        
         # Example: a variable that will be seen by the user in the shell, and
         # that the GUI modifies (the 'Counter++' button increments it):
         #self.namespace['app_counter'] = 0

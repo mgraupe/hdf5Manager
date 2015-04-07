@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>914</width>
-    <height>851</height>
+    <width>908</width>
+    <height>870</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -623,6 +623,9 @@
          <item row="3" column="0">
           <widget class="QFrame" name="horizontalFrame">
            <layout class="QHBoxLayout" name="horizontalLayout_3">
+            <property name="margin">
+             <number>0</number>
+            </property>
             <item>
              <widget class="QPushButton" name="plotDataBtn">
               <property name="text">
@@ -794,7 +797,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>914</width>
+     <width>908</width>
      <height>25</height>
     </rect>
    </property>

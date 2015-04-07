@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'hdf5_manager.ui'
 #
-# Created: Tue Apr  7 16:52:48 2015
+# Created: Tue Apr  7 23:27:51 2015
 #      by: PyQt4 UI code generator 4.11.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -26,7 +26,7 @@ except AttributeError:
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName(_fromUtf8("MainWindow"))
-        MainWindow.resize(914, 851)
+        MainWindow.resize(908, 870)
         MainWindow.setMinimumSize(QtCore.QSize(0, 700))
         MainWindow.setMaximumSize(QtCore.QSize(16777215, 16777215))
         self.centralwidget = QtGui.QWidget(MainWindow)
@@ -253,6 +253,7 @@ class Ui_MainWindow(object):
         self.horizontalFrame = QtGui.QFrame(self.gridFrame)
         self.horizontalFrame.setObjectName(_fromUtf8("horizontalFrame"))
         self.horizontalLayout_3 = QtGui.QHBoxLayout(self.horizontalFrame)
+        self.horizontalLayout_3.setMargin(0)
         self.horizontalLayout_3.setObjectName(_fromUtf8("horizontalLayout_3"))
         self.plotDataBtn = QtGui.QPushButton(self.horizontalFrame)
         self.plotDataBtn.setObjectName(_fromUtf8("plotDataBtn"))
@@ -337,7 +338,7 @@ class Ui_MainWindow(object):
         self.gridLayout_3.addWidget(self.tabWidget, 1, 1, 1, 1)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtGui.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 914, 25))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 908, 25))
         self.menubar.setObjectName(_fromUtf8("menubar"))
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtGui.QStatusBar(MainWindow)
