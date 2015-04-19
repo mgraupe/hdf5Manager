@@ -6,13 +6,13 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>908</width>
-    <height>870</height>
+    <width>1045</width>
+    <height>866</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>0</width>
+    <width>500</width>
     <height>700</height>
    </size>
   </property>
@@ -25,10 +25,19 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(226, 226, 226);</string>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout_3">
     <item row="0" column="0" rowspan="2">
      <widget class="QFrame" name="fileGridFrame">
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>16777215</height>
+       </size>
+      </property>
       <property name="frameShape">
        <enum>QFrame::StyledPanel</enum>
       </property>
@@ -37,25 +46,87 @@
         <number>6</number>
        </property>
        <item row="1" column="0">
+        <widget class="QLineEdit" name="workingDirectory">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255);</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QTreeWidget" name="experimentTree">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255);</string>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Sunken</enum>
+         </property>
+         <property name="midLineWidth">
+          <number>0</number>
+         </property>
+         <property name="sortingEnabled">
+          <bool>true</bool>
+         </property>
+         <property name="animated">
+          <bool>false</bool>
+         </property>
+         <attribute name="headerVisible">
+          <bool>true</bool>
+         </attribute>
+         <attribute name="headerCascadingSectionResizes">
+          <bool>false</bool>
+         </attribute>
+         <attribute name="headerDefaultSectionSize">
+          <number>200</number>
+         </attribute>
+         <attribute name="headerMinimumSectionSize">
+          <number>20</number>
+         </attribute>
+         <column>
+          <property name="text">
+           <string>Data</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Size</string>
+          </property>
+          <property name="textAlignment">
+           <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Type</string>
+          </property>
+          <property name="textAlignment">
+           <set>AlignHCenter|AlignVCenter|AlignCenter</set>
+          </property>
+         </column>
+        </widget>
+       </item>
+       <item row="0" column="0">
         <widget class="QWidget" name="horizontalWidget" native="true">
          <layout class="QHBoxLayout" name="horizontalLayout">
           <property name="spacing">
            <number>8</number>
           </property>
           <property name="leftMargin">
-           <number>8</number>
+           <number>0</number>
           </property>
           <property name="topMargin">
            <number>2</number>
           </property>
           <property name="rightMargin">
-           <number>8</number>
+           <number>0</number>
           </property>
           <property name="bottomMargin">
            <number>2</number>
           </property>
           <item>
            <widget class="QPushButton" name="loadDirectoryBtn">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(240, 240, 240);</string>
+            </property>
             <property name="text">
              <string>Load directory</string>
             </property>
@@ -63,6 +134,9 @@
           </item>
           <item>
            <widget class="QPushButton" name="reloadDirectoryBtn">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(240, 240, 240);</string>
+            </property>
             <property name="text">
              <string>Reload directory</string>
             </property>
@@ -71,20 +145,23 @@
          </layout>
         </widget>
        </item>
-       <item row="0" column="0">
-        <widget class="QTreeWidget" name="experimentTree">
-         <column>
-          <property name="text">
-           <string>Data</string>
-          </property>
-         </column>
-        </widget>
-       </item>
       </layout>
      </widget>
     </item>
-    <item row="1" column="1">
+    <item row="0" column="1">
      <widget class="QTabWidget" name="tabWidget">
+      <property name="minimumSize">
+       <size>
+        <width>440</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>400</width>
+        <height>16777215</height>
+       </size>
+      </property>
       <property name="currentIndex">
        <number>0</number>
       </property>
@@ -106,8 +183,8 @@
          <rect>
           <x>10</x>
           <y>10</y>
-          <width>421</width>
-          <height>521</height>
+          <width>411</width>
+          <height>531</height>
          </rect>
         </property>
         <property name="minimumSize">
@@ -118,7 +195,7 @@
         </property>
         <property name="maximumSize">
          <size>
-          <width>16777215</width>
+          <width>450</width>
           <height>16777215</height>
          </size>
         </property>
@@ -126,22 +203,122 @@
          <enum>QFrame::StyledPanel</enum>
         </property>
         <layout class="QGridLayout" name="gridLayout">
-         <property name="margin">
+         <property name="leftMargin">
           <number>6</number>
+         </property>
+         <property name="topMargin">
+          <number>4</number>
+         </property>
+         <property name="rightMargin">
+          <number>6</number>
+         </property>
+         <property name="bottomMargin">
+          <number>4</number>
          </property>
          <property name="spacing">
           <number>2</number>
          </property>
-         <item row="8" column="0">
+         <item row="7" column="0">
+          <widget class="QWidget" name="horizontalWidget" native="true">
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>28</height>
+            </size>
+           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_7">
+            <property name="margin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QLabel" name="label_2">
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>20</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string>Group attributes</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Expanding</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>300</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QPushButton" name="addExpRowBtn">
+              <property name="maximumSize">
+               <size>
+                <width>25</width>
+                <height>25</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string>+</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="removeExpRowBtn">
+              <property name="maximumSize">
+               <size>
+                <width>25</width>
+                <height>25</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string>-</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item row="11" column="0">
           <widget class="QTableWidget" name="dataSetAttributes">
            <property name="maximumSize">
             <size>
              <width>16777215</width>
-             <height>42</height>
+             <height>62</height>
             </size>
            </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(255, 255, 255);</string>
+           </property>
            <property name="rowCount">
-            <number>2</number>
+            <number>3</number>
            </property>
            <property name="columnCount">
             <number>2</number>
@@ -169,91 +346,37 @@
            </attribute>
            <row/>
            <row/>
+           <row/>
            <column/>
            <column/>
           </widget>
          </item>
-         <item row="0" column="0">
-          <widget class="QLabel" name="expInfoLabel">
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>20</height>
-            </size>
-           </property>
-           <property name="font">
-            <font>
-             <pointsize>11</pointsize>
-             <weight>75</weight>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="text">
-            <string>Experiment information</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0">
-          <widget class="QTableWidget" name="experimentAttributesFixed">
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>62</height>
-            </size>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">background-color: rgb(230, 230, 230);</string>
-           </property>
-           <property name="editTriggers">
-            <set>QAbstractItemView::NoEditTriggers</set>
-           </property>
-           <property name="rowCount">
-            <number>3</number>
-           </property>
-           <property name="columnCount">
-            <number>2</number>
-           </property>
-           <attribute name="horizontalHeaderVisible">
-            <bool>false</bool>
-           </attribute>
-           <attribute name="horizontalHeaderDefaultSectionSize">
-            <number>160</number>
-           </attribute>
-           <attribute name="horizontalHeaderStretchLastSection">
-            <bool>true</bool>
-           </attribute>
-           <attribute name="verticalHeaderVisible">
-            <bool>false</bool>
-           </attribute>
-           <attribute name="verticalHeaderDefaultSectionSize">
-            <number>20</number>
-           </attribute>
-           <row/>
-           <row/>
-           <row/>
-           <column/>
-           <column/>
-           <item row="0" column="0">
-            <property name="text">
-             <string/>
-            </property>
-            <property name="background">
-             <brush brushstyle="NoBrush">
-              <color alpha="255">
-               <red>0</red>
-               <green>0</green>
-               <blue>0</blue>
-              </color>
-             </brush>
-            </property>
-           </item>
-          </widget>
-         </item>
-         <item row="9" column="0">
+         <item row="13" column="0">
           <widget class="QWidget" name="horizontalWidget" native="true">
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>30</height>
+            </size>
+           </property>
            <layout class="QHBoxLayout" name="horizontalLayout_2">
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>3</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
             <item>
              <widget class="QPushButton" name="saveAttributeChangeBtn">
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(240, 240, 240);</string>
+              </property>
               <property name="text">
                <string>Save Attribute Changes </string>
               </property>
@@ -261,6 +384,9 @@
             </item>
             <item>
              <widget class="QPushButton" name="restoreAttributesBtn">
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(240, 240, 240);</string>
+              </property>
               <property name="text">
                <string>Restore Attributes</string>
               </property>
@@ -269,16 +395,19 @@
            </layout>
           </widget>
          </item>
-         <item row="5" column="0">
+         <item row="8" column="0">
           <widget class="QTableWidget" name="groupAttributes">
            <property name="maximumSize">
             <size>
              <width>16777215</width>
-             <height>82</height>
+             <height>102</height>
             </size>
            </property>
            <property name="autoFillBackground">
             <bool>false</bool>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(240, 255, 244);</string>
            </property>
            <property name="frameShape">
             <enum>QFrame::StyledPanel</enum>
@@ -293,7 +422,7 @@
             <enum>Qt::ElideRight</enum>
            </property>
            <property name="rowCount">
-            <number>4</number>
+            <number>5</number>
            </property>
            <property name="columnCount">
             <number>2</number>
@@ -341,18 +470,13 @@
            <row/>
            <row/>
            <row/>
+           <row/>
            <column/>
            <column/>
           </widget>
          </item>
-         <item row="6" column="0">
-          <widget class="QLabel" name="label">
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>0</height>
-            </size>
-           </property>
+         <item row="0" column="0">
+          <widget class="QLabel" name="expInfoLabel">
            <property name="maximumSize">
             <size>
              <width>16777215</width>
@@ -361,34 +485,201 @@
            </property>
            <property name="font">
             <font>
+             <pointsize>11</pointsize>
              <weight>75</weight>
              <bold>true</bold>
             </font>
            </property>
            <property name="text">
-            <string>Data-set information</string>
+            <string>Experiment attributes</string>
            </property>
           </widget>
          </item>
-         <item row="2" column="0">
+         <item row="9" column="0">
+          <widget class="QWidget" name="horizontalWidget" native="true">
+           <property name="maximumSize">
+            <size>
+             <width>1677215</width>
+             <height>28</height>
+            </size>
+           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_8">
+            <property name="margin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QLabel" name="label">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>20</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string>Data-set attributes</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_2">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QPushButton" name="addGroupRowBtn">
+              <property name="maximumSize">
+               <size>
+                <width>25</width>
+                <height>25</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string>+</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="removeGroupRowBtn">
+              <property name="maximumSize">
+               <size>
+                <width>25</width>
+                <height>25</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string>-</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item row="12" column="0">
+          <widget class="QWidget" name="horizontalWidget" native="true">
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>28</height>
+            </size>
+           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_9">
+            <property name="margin">
+             <number>0</number>
+            </property>
+            <item>
+             <spacer name="horizontalSpacer_3">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QPushButton" name="addDatasetRowBtn">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>20</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>25</width>
+                <height>25</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string>+</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="removeDatasetRowBtn">
+              <property name="maximumSize">
+               <size>
+                <width>25</width>
+                <height>25</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string>-</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item row="1" column="0">
           <widget class="QTableWidget" name="experimentAttributes">
            <property name="minimumSize">
             <size>
              <width>0</width>
-             <height>142</height>
+             <height>162</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
              <width>16777215</width>
-             <height>142</height>
+             <height>162</height>
             </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(231, 234, 255);</string>
            </property>
            <property name="textElideMode">
             <enum>Qt::ElideLeft</enum>
            </property>
            <property name="rowCount">
-            <number>7</number>
+            <number>8</number>
            </property>
            <property name="columnCount">
             <number>2</number>
@@ -417,114 +708,6 @@
            <row/>
            <row/>
            <row/>
-           <row/>
-           <column/>
-           <column/>
-          </widget>
-         </item>
-         <item row="3" column="0">
-          <widget class="QLabel" name="label_2">
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>20</height>
-            </size>
-           </property>
-           <property name="font">
-            <font>
-             <weight>75</weight>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="text">
-            <string>Group information</string>
-           </property>
-          </widget>
-         </item>
-         <item row="4" column="0">
-          <widget class="QTableWidget" name="groupAttributesFixed">
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>22</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>22</height>
-            </size>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">background-color: rgb(230, 230, 230);</string>
-           </property>
-           <property name="editTriggers">
-            <set>QAbstractItemView::NoEditTriggers</set>
-           </property>
-           <property name="rowCount">
-            <number>1</number>
-           </property>
-           <property name="columnCount">
-            <number>2</number>
-           </property>
-           <attribute name="horizontalHeaderVisible">
-            <bool>false</bool>
-           </attribute>
-           <attribute name="horizontalHeaderDefaultSectionSize">
-            <number>160</number>
-           </attribute>
-           <attribute name="horizontalHeaderStretchLastSection">
-            <bool>true</bool>
-           </attribute>
-           <attribute name="verticalHeaderVisible">
-            <bool>false</bool>
-           </attribute>
-           <attribute name="verticalHeaderDefaultSectionSize">
-            <number>20</number>
-           </attribute>
-           <attribute name="verticalHeaderHighlightSections">
-            <bool>false</bool>
-           </attribute>
-           <row/>
-           <column/>
-           <column/>
-          </widget>
-         </item>
-         <item row="7" column="0">
-          <widget class="QTableWidget" name="dataSetAttributesFixed">
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>42</height>
-            </size>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">background-color: rgb(230, 230, 230);</string>
-           </property>
-           <property name="editTriggers">
-            <set>QAbstractItemView::NoEditTriggers</set>
-           </property>
-           <property name="rowCount">
-            <number>2</number>
-           </property>
-           <property name="columnCount">
-            <number>2</number>
-           </property>
-           <attribute name="horizontalHeaderVisible">
-            <bool>false</bool>
-           </attribute>
-           <attribute name="horizontalHeaderDefaultSectionSize">
-            <number>160</number>
-           </attribute>
-           <attribute name="horizontalHeaderStretchLastSection">
-            <bool>true</bool>
-           </attribute>
-           <attribute name="verticalHeaderVisible">
-            <bool>false</bool>
-           </attribute>
-           <attribute name="verticalHeaderDefaultSectionSize">
-            <number>20</number>
-           </attribute>
            <row/>
            <row/>
            <column/>
@@ -537,8 +720,8 @@
         <property name="geometry">
          <rect>
           <x>10</x>
-          <y>540</y>
-          <width>421</width>
+          <y>550</y>
+          <width>411</width>
           <height>131</height>
          </rect>
         </property>
@@ -618,7 +801,11 @@
           </widget>
          </item>
          <item row="2" column="0">
-          <widget class="QLineEdit" name="dataSetSelection"/>
+          <widget class="QLineEdit" name="dataSetSelection">
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(255, 255, 255);</string>
+           </property>
+          </widget>
          </item>
          <item row="3" column="0">
           <widget class="QFrame" name="horizontalFrame">
@@ -628,6 +815,9 @@
             </property>
             <item>
              <widget class="QPushButton" name="plotDataBtn">
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(240, 240, 240);</string>
+              </property>
               <property name="text">
                <string>Plot data</string>
               </property>
@@ -635,6 +825,9 @@
             </item>
             <item>
              <widget class="QPushButton" name="addToPlotBtn">
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(240, 240, 240);</string>
+              </property>
               <property name="text">
                <string>Add to plot</string>
               </property>
@@ -648,9 +841,9 @@
        <widget class="QFrame" name="gridFrame">
         <property name="geometry">
          <rect>
-          <x>9</x>
-          <y>679</y>
-          <width>421</width>
+          <x>10</x>
+          <y>690</y>
+          <width>411</width>
           <height>61</height>
          </rect>
         </property>
@@ -669,6 +862,9 @@
             </property>
             <item>
              <widget class="QPushButton" name="launchiPythonBtn">
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(240, 240, 240);</string>
+              </property>
               <property name="text">
                <string>Launch iPython</string>
               </property>
@@ -676,6 +872,9 @@
             </item>
             <item>
              <widget class="QPushButton" name="sendToConsoleBtn">
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(240, 240, 240);</string>
+              </property>
               <property name="text">
                <string>Send to concole</string>
               </property>
@@ -683,6 +882,9 @@
             </item>
             <item>
              <widget class="QPushButton" name="plotNameSpaceBtn">
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(240, 240, 240);</string>
+              </property>
               <property name="text">
                <string>Print NameSpace</string>
               </property>
@@ -717,7 +919,7 @@
           <x>10</x>
           <y>10</y>
           <width>421</width>
-          <height>671</height>
+          <height>741</height>
          </rect>
         </property>
         <property name="frameShape">
@@ -728,10 +930,18 @@
           <number>6</number>
          </property>
          <item row="1" column="0">
-          <widget class="QTextEdit" name="experimentNotesValue"/>
+          <widget class="QTextEdit" name="experimentNotesValue">
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(255, 255, 255);</string>
+           </property>
+          </widget>
          </item>
          <item row="3" column="0">
-          <widget class="QTextEdit" name="groupNotesValue"/>
+          <widget class="QTextEdit" name="groupNotesValue">
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(255, 255, 255);</string>
+           </property>
+          </widget>
          </item>
          <item row="0" column="0">
           <widget class="QLabel" name="label_3">
@@ -768,8 +978,17 @@
             </size>
            </property>
            <layout class="QHBoxLayout" name="horizontalLayout_4">
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
             <item>
              <widget class="QPushButton" name="saveNotesBtn">
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(240, 240, 240);</string>
+              </property>
               <property name="text">
                <string>Save Notes</string>
               </property>
@@ -777,6 +996,9 @@
             </item>
             <item>
              <widget class="QPushButton" name="restoreNotesBtn">
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(240, 240, 240);</string>
+              </property>
               <property name="text">
                <string>Restore Notes</string>
               </property>
@@ -797,7 +1019,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>908</width>
+     <width>1045</width>
      <height>25</height>
     </rect>
    </property>

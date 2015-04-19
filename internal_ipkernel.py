@@ -6,17 +6,18 @@ import sys
 
 from IPython.lib.kernel import connect_qtconsole
 from IPython.kernel.zmq.kernelapp import IPKernelApp
-
+import numpy as np
 #-----------------------------------------------------------------------------
 # Functions and classes
 #-----------------------------------------------------------------------------
 def mpl_kernel(gui):
-    """Launch and return an IPython kernel with matplotlib support for the desired gui
+    """Launch and return an IPython kernel with pylab (matplotlib and numpy) support for the desired gui
     """
     kernel = IPKernelApp.instance()
-    kernel.initialize(['python', '--matplotlib=%s' % gui,
+    kernel.initialize(['python', '--pylab=%s' % gui,#'--matplotlib=%s' % gui,
                        #'--log-level=10'
                        ])
+    IPKernelApp.pylab = 'inline'
     return kernel
 
 
@@ -27,7 +28,7 @@ class InternalIPKernel(object):
         self.ipkernel = mpl_kernel(backend)
         # To create and track active qt consoles
         self.consoles = []
-        
+
         # This application will also act on the shell user namespace
         self.namespace = self.ipkernel.shell.user_ns
         

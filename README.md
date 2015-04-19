@@ -10,7 +10,7 @@ stored in the hdf5 format. The viewer is generic and supports any data type and 
 
 ##Built
 
-The graphical user interface is built in `Qt 4 Designer`. The interface file is generated with 
+The graphical user interface is built in `Qt Designer` (Version 4.8.6). The interface file is generated with 
 	* pyuic4 hdf5_manager.ui -o hdf5_manager.py
 And the `Data Manager itself is started with 
 	* python h5_manager.py
