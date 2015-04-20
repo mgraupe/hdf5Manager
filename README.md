@@ -6,7 +6,8 @@ The hdf5 Data Manager can be used for viewing, editing, and displaying data and 
 stored in the hdf5 format. The viewer is generic and supports any data structure stored in 
 the hdf5 format.
 
-### Features
+Features
+-----------
 * Groups, Data-sets and Attributes of hdf5 files in a directory can be viewed. File size, Group member number and Data-set size are shown. 
 * Attributes can be added and removed. 
 * Data can be plotted as generic plot, time-series, spikes and 3D plot (3rd dimension as color code).
@@ -14,22 +15,22 @@ the hdf5 format.
 
 ![alt text](files/hdf5_manager_gui_example.png "Example session of the hdf5 Data Manager")
 
-##Built
-
-The graphical user interface is built in **Qt Designer** (Version 4.8.6). The interface file is generated with 
+Built
+-----------
+The graphical user interface (*hdf5_manager.ui*) is built in **Qt Designer** (Version 4.8.6). The interface file (*hdf5_manager.py*) is generated with 
 ```python
 pyuic4 hdf5_manager.ui -o hdf5_manager.py
 ```
 
-##Built
-
-And the `Data Manager itself is started with 
+Usage
+-----------
+The **hdf5 Data Manager** itself is started with 
 ```python
 python h5_manager.py
 ```
 
-##Requires
-
+Requires
+-----------
 Besides standard python packages such as **numpy**, **time**, **sys** etc., the following packages are required :
 
 * h5py
@@ -38,8 +39,8 @@ Besides standard python packages such as **numpy**, **time**, **sys** etc., the 
 * matplotlib
 * IPython
 
-##License
-
+License
+-----------
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
 as published by the Free Software Foundation; either version 2
