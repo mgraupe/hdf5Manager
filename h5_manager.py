@@ -6,58 +6,24 @@ import glob
 import h5py
 import pdb
 import time
+import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import rcParams
 from matplotlib.ticker import MultipleLocator
 
-import numpy as np
-from datetime import datetime
-from scipy.spatial import ConvexHull
-from scipy.cluster.hierarchy import average, fcluster
-from scipy.stats import mode
-from shapely.geometry import MultiPolygon, Polygon
-from shapely.topology import TopologicalError
-from skimage import transform as tf
-import itertools as it
-from random import shuffle
-import warnings as wa
-
-from hdf5_manager import Ui_MainWindow
-#from importROIsWidget import Ui_importROIsWidget
-
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 
-from guidata import qthelpers
+#from shapely.geometry import MultiPolygon, Polygon
+#from shapely.topology import TopologicalError
+#from skimage import transform as tf
+#import itertools as it
+#from random import shuffle
+#import warnings as wa
 
-import guiqwt.baseplot
-#import guiqwt_patch
-#guiqwt.baseplot.BasePlot.add_item_with_z_offset = guiqwt_patch.add_item_with_z_offset
-from guiqwt.plot import ImageDialog
-from guiqwt.tools import FreeFormTool, InteractiveTool, \
-    RectangleTool, RectangularShapeTool, SelectTool
-from guiqwt.builder import make
-from guiqwt.shapes import PolygonShape, EllipseShape
-from guiqwt.events import setup_standard_tool_filter, PanHandler
-from guiqwt.image import ImageItem
-
+# files
+from hdf5_manager import Ui_MainWindow
 from internal_ipkernel import InternalIPKernel
-#def create_window(window_class):
-	#"""Create a Qt window in Python, or interactively in IPython with Qt GUI
-	#event loop integration.
-	#"""
-	#app_created = False
-	#app = QtCore.QCoreApplication.instance()
-	#if app is None:
-		#app = QtGui.QApplication(sys.argv)
-		#app_created = True
-	#app.references = set()
-	#window = window_class()
-	#app.references.add(window)
-	#window.show()
-	#if app_created:
-		#app.exec_()
-	#return window
 
 def hyphen_range(s):
 	#print s, s.split(',')
@@ -83,7 +49,7 @@ def hyphen_range(s):
 			raise ValueError('format error in %s' % x)
 
 class hdf5Viewer(QMainWindow, Ui_MainWindow,InternalIPKernel):
-	"""Instance of the ROI Buddy Qt interface."""
+	"""Instance of the hdf5 Data Manager Qt interface."""
 	def __init__(self):
 		"""
 		Initialize the application
@@ -91,7 +57,7 @@ class hdf5Viewer(QMainWindow, Ui_MainWindow,InternalIPKernel):
 		# initialize the UI and parent class
 		QMainWindow.__init__(self)
 		self.setupUi(self)
-		self.setWindowTitle('HDF5 file viewer')
+		self.setWindowTitle('HDF5 Data Manager')
 		#
 		self.create_status_bar()
 		# 
@@ -252,7 +218,7 @@ class hdf5Viewer(QMainWindow, Ui_MainWindow,InternalIPKernel):
 		# time-series plot
 		if self.timeSeriesRadioBtn.isChecked():
 			try:
-				dt = curItemList[0].attrs['dt']
+				dt = float(curItemList[0].attrs['dt'])
 			except KeyError:
 				if selection:
 					a1i = self.ax1.plot(curItemList[0].value[:,dsSelection])
@@ -333,7 +299,7 @@ class hdf5Viewer(QMainWindow, Ui_MainWindow,InternalIPKernel):
 		# time-series plot
 		if self.timeSeriesRadioBtn.isChecked():
 			try:
-				dt = curItemList[0].attrs['dt']
+				dt = float(curItemList[0].attrs['dt'])
 			except KeyError:
 				if selection:
 					a1i = self.ax1.plot(curItemList[0].value[:,dsSelection])
