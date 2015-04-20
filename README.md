@@ -8,7 +8,7 @@ the hdf5 format.
 
 Features
 -----------
-* Groups, Data-sets and Attributes of hdf5 files in a directory can be viewed. File size, Group member number and Data-set size are shown. 
+* Groups, Data-sets and Attributes of hdf5 files in a directory can be viewed. File size, Group member number and Data-set shape are read out and displayed. 
 * Attributes can be added and removed. 
 * Data can be plotted as generic plot, time-series, spikes and 3D plot (3rd dimension as color code).
 * Data can be send to an iPython console which allows further analysis, manipulation or displaying. 
