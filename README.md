@@ -3,20 +3,25 @@ hdf5 Data Manager
 =================
 
 The hdf5 Data Manager can be used for viewing, editing, and displaying data and attributes 
-stored in the hdf5 format. The viewer is generic and supports any data type and structure.
+stored in the hdf5 format. The viewer is generic and supports any data structure stored in 
+the hdf5 format.
 
 .. figure:: doc/overview.jpg
    :align:  center
 
 ##Built
 
-The graphical user interface is built in `Qt Designer` (Version 4.8.6). The interface file is generated with 
-	* pyuic4 hdf5_manager.ui -o hdf5_manager.py
+The graphical user interface is built in **Qt Designer** (Version 4.8.6). The interface file is generated with 
+```python
+pyuic4 hdf5_manager.ui -o hdf5_manager.py
+```
+
 And the `Data Manager itself is started with 
-	* python h5_manager.py
+```python
+python h5_manager.py
+```
 
 ##Requires
-
 
 Documentation to come. The Data Manager is under heavy development phase and a documentation will appear once a stable version is released. 
 
