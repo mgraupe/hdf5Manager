@@ -13,10 +13,10 @@ Features
 * Data can be plotted as generic plot, time-series, spikes and 3D plot (3rd dimension as color code).
 * Data can be send to an iPython console which allows further analysis, manipulation or displaying. 
 
-## Main Window
+### Main Window
 ![alt text](files/hdf5_manager_gui.png "Example session of the hdf5 Data Manager")
 
-## Session with plotting and iPython console.
+### Session with plotting and iPython console.
 ![alt text](files/hdf5_manager_gui_example.png "Example session of the hdf5 Data Manager")
 
 
