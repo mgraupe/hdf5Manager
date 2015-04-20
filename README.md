@@ -6,8 +6,8 @@ The hdf5 Data Manager can be used for viewing, editing, and displaying data and 
 stored in the hdf5 format. The viewer is generic and supports any data structure stored in 
 the hdf5 format.
 
-.. figure:: doc/overview.jpg
-   :align:  center
+
+-![alt text](files/hdf5_manager_gui_example.png "Example session of the hdf5 Data Manager")
 
 ##Built
 
