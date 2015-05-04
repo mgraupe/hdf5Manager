@@ -449,14 +449,6 @@ class hdf5Viewer(QMainWindow, Ui_MainWindow,InternalIPKernel):
 						self.experimentAttributes.insertRow(rowExperimentN)
 						rowExperimentN+=1
 					self.fillOutAttributeTable(self.experimentAttributes,eee,nE)
-					#newitemC0 = QTableWidgetItem(str(eee[0]))
-					#newitemC1 = QTableWidgetItem(str(eee[1]))
-					#newitemC2 = QTableWidgetItem(type(eee[1]).__name__)
-					#if type(eee[1]).__name__ == 'ndarray':
-					#	newitemC2 = QTableWidgetItem('arr,'+type(eee[1][0]).__name__)
-					#self.experimentAttributes.setItem(nE, 0, newitemC0)
-					#self.experimentAttributes.setItem(nE, 1, newitemC1)
-					#self.experimentAttributes.setItem(nE, 2, newitemC2)
 					nE+=1
 					
 			
@@ -470,14 +462,6 @@ class hdf5Viewer(QMainWindow, Ui_MainWindow,InternalIPKernel):
 						self.dataSetAttributes.insertRow(rowDataSetN)
 						rowDataSetN+=1
 					self.fillOutAttributeTable(self.dataSetAttributes,aaa,nDS)
-					#newitemC0 = QTableWidgetItem(str(aaa[0]))
-					#newitemC1 = QTableWidgetItem(str(aaa[1]))
-					#newitemC2 = QTableWidgetItem(type(aaa[1]).__name__)
-					#if type(aaa[1]).__name__ == 'ndarray':
-					#	newitemC2 = QTableWidgetItem('arr,'+type(aaa[1][0]).__name__)
-					#self.dataSetAttributes.setItem(nDS, 0, newitemC0)
-					#self.dataSetAttributes.setItem(nDS, 1, newitemC1)
-					#self.dataSetAttributes.setItem(nDS, 2, newitemC2)
 					nDS+=1
 				# group attributes
 				nG=0
@@ -490,14 +474,6 @@ class hdf5Viewer(QMainWindow, Ui_MainWindow,InternalIPKernel):
 							self.groupAttributes.insertRow(rowGroupN)
 							rowGroupN+=1
 						self.fillOutAttributeTable(self.groupAttributes,ppp,nG)
-						#newitemC0 = QTableWidgetItem(str(ppp[0]))
-						#newitemC1 = QTableWidgetItem(str(ppp[1]))
-						#newitemC2 = QTableWidgetItem(type(ppp[1]).__name__)
-						#if type(ppp[1]).__name__ == 'ndarray':
-						#	newitemC2 = QTableWidgetItem('arr,'+type(ppp[1][0]).__name__)
-						#self.groupAttributes.setItem(nG, 0, newitemC0)
-						#self.groupAttributes.setItem(nG, 1, newitemC1)
-						#self.groupAttributes.setItem(nG, 2, newitemC2)
 						nG+=1
 				self.plotDataBtn.setEnabled(True)
 			# in case group is selected
