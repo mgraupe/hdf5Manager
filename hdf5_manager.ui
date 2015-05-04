@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1045</width>
+    <width>1085</width>
     <height>866</height>
    </rect>
   </property>
@@ -152,13 +152,13 @@
      <widget class="QTabWidget" name="tabWidget">
       <property name="minimumSize">
        <size>
-        <width>440</width>
+        <width>475</width>
         <height>0</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
-        <width>400</width>
+        <width>475</width>
         <height>16777215</height>
        </size>
       </property>
@@ -183,7 +183,7 @@
          <rect>
           <x>10</x>
           <y>10</y>
-          <width>411</width>
+          <width>451</width>
           <height>531</height>
          </rect>
         </property>
@@ -195,7 +195,7 @@
         </property>
         <property name="maximumSize">
          <size>
-          <width>450</width>
+          <width>480</width>
           <height>16777215</height>
          </size>
         </property>
@@ -269,7 +269,7 @@
              <widget class="QPushButton" name="addExpRowBtn">
               <property name="maximumSize">
                <size>
-                <width>25</width>
+                <width>40</width>
                 <height>25</height>
                </size>
               </property>
@@ -280,15 +280,15 @@
                </font>
               </property>
               <property name="text">
-               <string>+</string>
+               <string>+row</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="removeExpRowBtn">
+             <widget class="QPushButton" name="removeExpAttributeBtn">
               <property name="maximumSize">
                <size>
-                <width>25</width>
+                <width>55</width>
                 <height>25</height>
                </size>
               </property>
@@ -299,7 +299,7 @@
                </font>
               </property>
               <property name="text">
-               <string>-</string>
+               <string>delAttr</string>
               </property>
              </widget>
             </item>
@@ -321,13 +321,13 @@
             <number>3</number>
            </property>
            <property name="columnCount">
-            <number>2</number>
+            <number>3</number>
            </property>
            <attribute name="horizontalHeaderVisible">
             <bool>false</bool>
            </attribute>
            <attribute name="horizontalHeaderDefaultSectionSize">
-            <number>160</number>
+            <number>132</number>
            </attribute>
            <attribute name="horizontalHeaderHighlightSections">
             <bool>true</bool>
@@ -347,6 +347,7 @@
            <row/>
            <row/>
            <row/>
+           <column/>
            <column/>
            <column/>
           </widget>
@@ -425,7 +426,7 @@
             <number>5</number>
            </property>
            <property name="columnCount">
-            <number>2</number>
+            <number>3</number>
            </property>
            <attribute name="horizontalHeaderVisible">
             <bool>false</bool>
@@ -434,7 +435,7 @@
             <bool>false</bool>
            </attribute>
            <attribute name="horizontalHeaderDefaultSectionSize">
-            <number>160</number>
+            <number>132</number>
            </attribute>
            <attribute name="horizontalHeaderHighlightSections">
             <bool>true</bool>
@@ -471,6 +472,7 @@
            <row/>
            <row/>
            <row/>
+           <column/>
            <column/>
            <column/>
           </widget>
@@ -549,7 +551,7 @@
              <widget class="QPushButton" name="addGroupRowBtn">
               <property name="maximumSize">
                <size>
-                <width>25</width>
+                <width>40</width>
                 <height>25</height>
                </size>
               </property>
@@ -560,15 +562,15 @@
                </font>
               </property>
               <property name="text">
-               <string>+</string>
+               <string>+row</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="removeGroupRowBtn">
+             <widget class="QPushButton" name="removeGroupAttributeBtn">
               <property name="maximumSize">
                <size>
-                <width>25</width>
+                <width>55</width>
                 <height>25</height>
                </size>
               </property>
@@ -579,7 +581,7 @@
                </font>
               </property>
               <property name="text">
-               <string>-</string>
+               <string>delAttr</string>
               </property>
              </widget>
             </item>
@@ -621,7 +623,7 @@
               </property>
               <property name="maximumSize">
                <size>
-                <width>25</width>
+                <width>40</width>
                 <height>25</height>
                </size>
               </property>
@@ -632,15 +634,15 @@
                </font>
               </property>
               <property name="text">
-               <string>+</string>
+               <string>+row</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="removeDatasetRowBtn">
+             <widget class="QPushButton" name="removeDatasetAttributeBtn">
               <property name="maximumSize">
                <size>
-                <width>25</width>
+                <width>55</width>
                 <height>25</height>
                </size>
               </property>
@@ -651,7 +653,7 @@
                </font>
               </property>
               <property name="text">
-               <string>-</string>
+               <string>delAttr</string>
               </property>
              </widget>
             </item>
@@ -682,13 +684,16 @@
             <number>8</number>
            </property>
            <property name="columnCount">
-            <number>2</number>
+            <number>3</number>
            </property>
            <attribute name="horizontalHeaderVisible">
             <bool>false</bool>
            </attribute>
            <attribute name="horizontalHeaderDefaultSectionSize">
-            <number>160</number>
+            <number>132</number>
+           </attribute>
+           <attribute name="horizontalHeaderMinimumSectionSize">
+            <number>56</number>
            </attribute>
            <attribute name="horizontalHeaderStretchLastSection">
             <bool>true</bool>
@@ -712,6 +717,7 @@
            <row/>
            <column/>
            <column/>
+           <column/>
           </widget>
          </item>
         </layout>
@@ -721,7 +727,7 @@
          <rect>
           <x>10</x>
           <y>550</y>
-          <width>411</width>
+          <width>451</width>
           <height>131</height>
          </rect>
         </property>
@@ -843,7 +849,7 @@
          <rect>
           <x>10</x>
           <y>690</y>
-          <width>411</width>
+          <width>451</width>
           <height>61</height>
          </rect>
         </property>
@@ -918,7 +924,7 @@
          <rect>
           <x>10</x>
           <y>10</y>
-          <width>421</width>
+          <width>451</width>
           <height>741</height>
          </rect>
         </property>
@@ -1019,7 +1025,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1045</width>
+     <width>1085</width>
      <height>25</height>
     </rect>
    </property>

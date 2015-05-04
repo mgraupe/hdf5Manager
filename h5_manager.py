@@ -10,6 +10,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import rcParams
 from matplotlib.ticker import MultipleLocator
+import re
 
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
@@ -75,6 +76,18 @@ class hdf5Viewer(QMainWindow, Ui_MainWindow,InternalIPKernel):
 		self.experimentTree.setColumnWidth(1, 90)
 		self.experimentTree.setColumnWidth(2, 70)
 		
+		self.experimentAttributes.setColumnWidth(0, 140)
+		self.experimentAttributes.setColumnWidth(1, 215)
+		self.experimentAttributes.setColumnWidth(2, 60)
+		
+		self.groupAttributes.setColumnWidth(0, 140)
+		self.groupAttributes.setColumnWidth(1, 215)
+		self.groupAttributes.setColumnWidth(2, 60)
+		
+		self.dataSetAttributes.setColumnWidth(0, 140)
+		self.dataSetAttributes.setColumnWidth(1, 215)
+		self.dataSetAttributes.setColumnWidth(2, 60)
+		
 		#self.experimentTree.headerView().resizeSection(0, 100)
 		#self.experimentTree.headerView().resizeSection(1, 40)
 		#self.experimentTree.headerView().resizeSection(2, 40)
@@ -113,11 +126,12 @@ class hdf5Viewer(QMainWindow, Ui_MainWindow,InternalIPKernel):
 		self.dataSetAttributes.itemChanged.connect(self.attributeChanges) 
 		
 		self.addExpRowBtn.clicked.connect(self.addExperimentRow)
-		self.removeExpRowBtn.clicked.connect(self.removeExperimentRow)
 		self.addGroupRowBtn.clicked.connect(self.addGroupRow)
-		self.removeGroupRowBtn.clicked.connect(self.removeGroupRow)
 		self.addDatasetRowBtn.clicked.connect(self.addDatasetRow)
-		self.removeDatasetRowBtn.clicked.connect(self.removeDatasetRow)
+		
+		self.removeExpAttributeBtn.clicked.connect(self.removeExperimentAttribute)
+		self.removeGroupAttributeBtn.clicked.connect(self.removeGroupAttribute)
+		self.removeDatasetAttributeBtn.clicked.connect(self.removeDatasetAttribute)
 		
 		self.saveAttributeChangeBtn.clicked.connect(self.saveAttributes)
 		self.restoreAttributesBtn.clicked.connect(self.toggle_data_selection)
@@ -395,6 +409,16 @@ class hdf5Viewer(QMainWindow, Ui_MainWindow,InternalIPKernel):
 		os.chdir(curDir)
 		#self.saveAttributeChangeBtn.setEnabled(False)
 	####################################################
+	def fillOutAttributeTable(self,table,it,rowN):
+		newitemC0 = QTableWidgetItem(str(it[0]))
+		newitemC1 = QTableWidgetItem(str(it[1]))
+		newitemC2 = QTableWidgetItem(type(it[1]).__name__)
+		if type(it[1]).__name__ == 'ndarray':
+			newitemC2 = QTableWidgetItem('arr,'+type(it[1][0]).__name__)
+		table.setItem(rowN, 0, newitemC0)
+		table.setItem(rowN, 1, newitemC1)
+		table.setItem(rowN, 2, newitemC2)
+	####################################################
 	def toggle_data_selection(self):
 		
 		treeItem = self.experimentTree.currentItem()
@@ -424,10 +448,15 @@ class hdf5Viewer(QMainWindow, Ui_MainWindow,InternalIPKernel):
 					if nE >= (rowExperimentN-2):
 						self.experimentAttributes.insertRow(rowExperimentN)
 						rowExperimentN+=1
-					newitemC0 = QTableWidgetItem(str(eee[0]))
-					newitemC1 = QTableWidgetItem(str(eee[1]))
-					self.experimentAttributes.setItem(nE, 0, newitemC0)
-					self.experimentAttributes.setItem(nE, 1, newitemC1)
+					self.fillOutAttributeTable(self.experimentAttributes,eee,nE)
+					#newitemC0 = QTableWidgetItem(str(eee[0]))
+					#newitemC1 = QTableWidgetItem(str(eee[1]))
+					#newitemC2 = QTableWidgetItem(type(eee[1]).__name__)
+					#if type(eee[1]).__name__ == 'ndarray':
+					#	newitemC2 = QTableWidgetItem('arr,'+type(eee[1][0]).__name__)
+					#self.experimentAttributes.setItem(nE, 0, newitemC0)
+					#self.experimentAttributes.setItem(nE, 1, newitemC1)
+					#self.experimentAttributes.setItem(nE, 2, newitemC2)
 					nE+=1
 					
 			
@@ -440,10 +469,15 @@ class hdf5Viewer(QMainWindow, Ui_MainWindow,InternalIPKernel):
 					if nDS >= (rowDataSetN-2):
 						self.dataSetAttributes.insertRow(rowDataSetN)
 						rowDataSetN+=1
-					newitemC0 = QTableWidgetItem(str(aaa[0]))
-					newitemC1 = QTableWidgetItem(str(aaa[1]))
-					self.dataSetAttributes.setItem(nDS, 0, newitemC0)
-					self.dataSetAttributes.setItem(nDS, 1, newitemC1)
+					self.fillOutAttributeTable(self.dataSetAttributes,aaa,nDS)
+					#newitemC0 = QTableWidgetItem(str(aaa[0]))
+					#newitemC1 = QTableWidgetItem(str(aaa[1]))
+					#newitemC2 = QTableWidgetItem(type(aaa[1]).__name__)
+					#if type(aaa[1]).__name__ == 'ndarray':
+					#	newitemC2 = QTableWidgetItem('arr,'+type(aaa[1][0]).__name__)
+					#self.dataSetAttributes.setItem(nDS, 0, newitemC0)
+					#self.dataSetAttributes.setItem(nDS, 1, newitemC1)
+					#self.dataSetAttributes.setItem(nDS, 2, newitemC2)
 					nDS+=1
 				# group attributes
 				nG=0
@@ -455,10 +489,15 @@ class hdf5Viewer(QMainWindow, Ui_MainWindow,InternalIPKernel):
 						if nG >= (rowGroupN-2):
 							self.groupAttributes.insertRow(rowGroupN)
 							rowGroupN+=1
-						newitemC0 = QTableWidgetItem(str(ppp[0]))
-						newitemC1 = QTableWidgetItem(str(ppp[1]))
-						self.groupAttributes.setItem(nG, 0, newitemC0)
-						self.groupAttributes.setItem(nG, 1, newitemC1)
+						self.fillOutAttributeTable(self.groupAttributes,ppp,nG)
+						#newitemC0 = QTableWidgetItem(str(ppp[0]))
+						#newitemC1 = QTableWidgetItem(str(ppp[1]))
+						#newitemC2 = QTableWidgetItem(type(ppp[1]).__name__)
+						#if type(ppp[1]).__name__ == 'ndarray':
+						#	newitemC2 = QTableWidgetItem('arr,'+type(ppp[1][0]).__name__)
+						#self.groupAttributes.setItem(nG, 0, newitemC0)
+						#self.groupAttributes.setItem(nG, 1, newitemC1)
+						#self.groupAttributes.setItem(nG, 2, newitemC2)
 						nG+=1
 				self.plotDataBtn.setEnabled(True)
 			# in case group is selected
@@ -472,10 +511,7 @@ class hdf5Viewer(QMainWindow, Ui_MainWindow,InternalIPKernel):
 						if nG >= (rowGroupN-2):
 							self.groupAttributes.insertRow(rowGroupN)
 							rowGroupN+=1
-						newitemC0 = QTableWidgetItem(str(ppp[0]))
-						newitemC1 = QTableWidgetItem(str(ppp[1]))
-						self.groupAttributes.setItem(nG, 0, newitemC0)
-						self.groupAttributes.setItem(nG, 1, newitemC1)
+						self.fillOutAttributeTable(self.groupAttributes,ppp,nG)
 						nG+=1
 				self.plotDataBtn.setEnabled(False)
 			#
@@ -488,7 +524,28 @@ class hdf5Viewer(QMainWindow, Ui_MainWindow,InternalIPKernel):
 	def attributeChanges(self):
 		self.saveAttributeChangeBtn.setEnabled(True)
 		self.restoreAttributesBtn.setEnabled(True)
-		
+        #############################################################################
+	def saveAttributeFields(self,obj,i0,i1,i2):
+		if i0 and len(i0.text())>0 :
+			#try:
+			if i2.text()[:5] == 'float':
+				obj.attrs.create(str(i0.text()), float(i1.text()))
+			elif i2.text()[:3] == 'int':
+				obj.attrs.create(str(i0.text()), int(i1.text()))
+			elif i2.text()[:3] == 'str':
+				obj.attrs.create(str(i0.text()), str(i1.text()))
+			elif i2.text()[:4] == 'arr,':
+				if i2.text()[4:7] == 'int':
+					temp = map(int,re.findall(r'\d+', str((i1.text()))))
+					obj.attrs.create(str(i0.text()), np.array(temp))
+				elif i2.text()[4:9] == 'float':
+					temp = map(float,re.findall(r'\d+', str((i1.text()))))
+					obj.attrs.create(str(i0.text()), np.array(temp))
+			else:
+				QMessageBox.warning(self, "Warning","Attribute type has to be float, int or str.")
+					#
+			#except ValueError, AttributeError:
+			#	pass
 	#############################################################################
 	def saveAttributes(self):
 		# get selected item
@@ -499,16 +556,8 @@ class hdf5Viewer(QMainWindow, Ui_MainWindow,InternalIPKernel):
 		for row in xrange(self.experimentAttributes.rowCount()):
 			itemC0 = self.experimentAttributes.item(row, 0)
 			itemC1 = self.experimentAttributes.item(row, 1)
-			if itemC0:
-				#t1 = itemC0.text()
-				#t2 = itemC1.text()
-				#if not t1.isEmpty() and not t2.isEmpty:
-				#sss = str(itemC0.text())
-				#if not sss.strip():
-				try:
-					selItem.file.attrs.__setitem__(str(itemC0.text()), str(itemC1.text()))
-				except ValueError, AttributeError:
-					pass
+			itemC2 = self.experimentAttributes.item(row, 2)
+			self.saveAttributeFields(selItem.file,itemC0,itemC1,itemC2)
 		
 		# save group attributes
 		if (type(selItem) == h5py._hl.group.Group and not selItem.name == '/'):
@@ -517,12 +566,8 @@ class hdf5Viewer(QMainWindow, Ui_MainWindow,InternalIPKernel):
 			for row in xrange(self.groupAttributes.rowCount()):
 				itemC0 = self.groupAttributes.item(row, 0)
 				itemC1 = self.groupAttributes.item(row, 1)
-				#print itemC0
-				if itemC0:
-					try:
-						selItem.attrs.__setitem__(str(itemC0.text()), str(itemC1.text()))
-					except ValueError, AttributeError:
-						pass
+				itemC2 = self.groupAttributes.item(row, 2)
+				self.saveAttributeFields(selItem,itemC0,itemC1,itemC2)
 		# in case dataset was selected
 		elif type(selItem) == h5py._hl.dataset.Dataset:
 			# data-set attributes
@@ -530,24 +575,15 @@ class hdf5Viewer(QMainWindow, Ui_MainWindow,InternalIPKernel):
 			for row in xrange(self.dataSetAttributes.rowCount()):
 				itemC0 = self.dataSetAttributes.item(row, 0)
 				itemC1 = self.dataSetAttributes.item(row, 1)
-				#print row, type(itemC0)
-				if itemC0:
-					try:
-						selItem.attrs.__setitem__(str(itemC0.text()), str(itemC1.text()))
-					except ValueError, AttributeError:
-						pass
-					
-			
+				itemC2 = self.dataSetAttributes.item(row, 2)
+				self.saveAttributeFields(selItem,itemC0,itemC1,itemC2)
 			# group attributes
 			self.delAttributes(selItem.parent)
 			for row in xrange(self.groupAttributes.rowCount()):
 				itemC0 = self.groupAttributes.item(row, 0)
 				itemC1 = self.groupAttributes.item(row, 1)
-				if itemC0:
-					try:
-						selItem.parent.attrs.__setitem__(str(itemC0.text()), str(itemC1.text()))
-					except ValueError, AttributeError:
-						pass
+				itemC2 = self.groupAttributes.item(row, 2)
+				self.saveAttributeFields(selItem.parent,itemC0,itemC1,itemC2)
 		#print 'saved'
 		self.saveAttributeChangeBtn.setEnabled(False)
 		self.restoreAttributesBtn.setEnabled(False)
@@ -591,46 +627,72 @@ class hdf5Viewer(QMainWindow, Ui_MainWindow,InternalIPKernel):
 		# get selected item
 		treeItem = self.experimentTree.currentItem()
 		item = treeItem.data(0, Qt.UserRole).toPyObject()
-		
 		self.addData(item.value)
 	#############################################################################
 	def addExperimentRow(self):
 		rowExperimentN = self.experimentAttributes.rowCount()
 		self.experimentAttributes.insertRow(rowExperimentN)
 	#############################################################################
-	def removeExperimentRow(self):
-		rowExperimentN = self.experimentAttributes.rowCount()
-		self.experimentAttributes.removeRow(rowExperimentN-1)
+	def removeExperimentAttribute(self):
+		treeItem = self.experimentTree.currentItem()
+		selItem = treeItem.data(0, Qt.UserRole).toPyObject()
+		
+		row = self.experimentAttributes.currentItem().row()
+		attName = str(self.experimentAttributes.item(row,0).text())
+		selItem.file.attrs.__delitem__(attName)
+		
+		self.toggle_data_selection()
 	#############################################################################
 	def addGroupRow(self):
 		rowGroupN = self.groupAttributes.rowCount()
 		self.groupAttributes.insertRow(rowGroupN)
 	#############################################################################
-	def removeGroupRow(self):
-		rowGroupN = self.groupAttributes.rowCount()
-		self.groupAttributes.removeRow(rowGroupN-1)
+	def removeGroupAttribute(self):
+		treeItem = self.experimentTree.currentItem()
+		selItem = treeItem.data(0, Qt.UserRole).toPyObject()
+		
+		row = self.groupAttributes.currentItem().row()
+		attName = str(self.groupAttributes.item(row,0).text())
+		
+		if (type(selItem) == h5py._hl.group.Group and not selItem.name == '/'):
+			selItem.attrs.__delitem__(attName)
+		elif type(selItem) == h5py._hl.dataset.Dataset:
+			selItem.parent.attrs.__delitem__(attName)
+			
+		self.toggle_data_selection()
 	#############################################################################
 	def addDatasetRow(self):
 		rowDatasetN = self.dataSetAttributes.rowCount()
 		self.dataSetAttributes.insertRow(rowDatasetN)
 	#############################################################################
-	def removeDatasetRow(self):
-		rowDatasetN = self.dataSetAttributes.rowCount()
-		self.dataSetAttributes.removeRow(rowDatasetN-1)
+	def removeDatasetAttribute(self):
+		treeItem = self.experimentTree.currentItem()
+		selItem = treeItem.data(0, Qt.UserRole).toPyObject()
+		
+		row = self.dataSetAttributes.currentItem().row()
+		attName = str(self.dataSetAttributes.item(row,0).text())
+		
+		selItem.attrs.__delitem__(attName)
+			
+		self.toggle_data_selection()
 	#############################################################################
 	def closeEvent(self, event):
 		
-		reply = QMessageBox.question(self, 'Message',
-		"Are you sure to quit?", QMessageBox.Yes | 
-		QMessageBox.No, QMessageBox.No)
+		print 'bye'
+		self.cleanup_consoles()
+		quit()
+		event.accept()
+		#reply = QMessageBox.question(self, 'Message',
+		#"Are you sure to quit?", QMessageBox.Yes | 
+		#QMessageBox.No, QMessageBox.No)
 
-		if reply == QMessageBox.Yes:
-			self.cleanup_consoles()
-			quit()
-			event.accept()
-			print 'bye'
-		else:
-			event.ignore()        
+		#if reply == QMessageBox.Yes:
+		#	self.cleanup_consoles()
+		#	quit()
+		#	event.accept()
+		#	print 'bye'
+		#else:
+		#	event.ignore()        
 		
 			
 ##########################################################
