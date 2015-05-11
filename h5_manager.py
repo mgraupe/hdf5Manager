@@ -11,6 +11,7 @@ import matplotlib.pyplot as plt
 from matplotlib import rcParams
 from matplotlib.ticker import MultipleLocator
 import re
+import pickle
 
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
@@ -67,14 +68,24 @@ class hdf5Viewer(QMainWindow, Ui_MainWindow,InternalIPKernel):
 		#self.ipk = InternalIPKernel()
 		self.init_ipkernel('qt')
 		
+		# read settings file if it exists
+		try :
+			h5Settings = pickle.load(open('.h5Settings.p','rb'))
+		except IOError:
+			print 'No settings fils found.'
+			setExits = False
+		else:
+			setExits = True
+		
 		#self.ipk = InternalIPKernel.init_ipkernel('qt')
 		#window = create_window(MyQtWindow)
 		#curDir = os.getcwd()
 		
 		self.experimentTree.setSelectionMode(QAbstractItemView.ExtendedSelection)
-		self.experimentTree.setColumnWidth(0, 400)
+		self.experimentTree.setColumnWidth(0, 360)
 		self.experimentTree.setColumnWidth(1, 90)
 		self.experimentTree.setColumnWidth(2, 70)
+		self.experimentTree.sortByColumn(0, Qt.AscendingOrder)
 		
 		self.experimentAttributes.setColumnWidth(0, 140)
 		self.experimentAttributes.setColumnWidth(1, 215)
@@ -91,6 +102,12 @@ class hdf5Viewer(QMainWindow, Ui_MainWindow,InternalIPKernel):
 		#self.experimentTree.headerView().resizeSection(0, 100)
 		#self.experimentTree.headerView().resizeSection(1, 40)
 		#self.experimentTree.headerView().resizeSection(2, 40)
+		
+		if setExits:
+			DDir = h5Settings['dataDirectory']
+			if os.path.isdir(DDir):
+				self.dataDirectory = DDir
+				self.fillOutFileList()
 		
 		self.saveAttributeChangeBtn.setEnabled(False)
 		self.restoreAttributesBtn.setEnabled(False)
@@ -153,7 +170,12 @@ class hdf5Viewer(QMainWindow, Ui_MainWindow,InternalIPKernel):
         # load directory with data files
         def load_directory(self):
 		
-		dataDirNew = str(QFileDialog.getExistingDirectory(self, "Select Data Directory","/home/mgraupe/Documents/BTsync/brandon_data"))
+		try:
+			DDir = self.dataDirectory
+		except NameError:
+			dataDirNew = str(QFileDialog.getExistingDirectory(self, "Select Data Directory","/home/mgraupe/Documents/BTsync/brandon_data"))
+		else:
+			dataDirNew = str(QFileDialog.getExistingDirectory(self, "Select Data Directory", DDir))
 		#fname = QtGui.QFileDialog.getOpenFileName(self, 'Open file', '/home')
 		
 		if len(dataDirNew)>0:
@@ -375,6 +397,15 @@ class hdf5Viewer(QMainWindow, Ui_MainWindow,InternalIPKernel):
 				tree_node.setData(0, Qt.UserRole, data)
 				if type(data) == h5py._hl.group.Group:
 					tree_node.setData(1, Qt.DisplayRole, str(len(data.keys())))
+					try:
+						lab = data.attrs['type']
+					except KeyError:
+						pass
+					else:
+						tree_node.setData(2, Qt.DisplayRole, str(lab))
+						f.setBold(True)
+						tree_node.setFont(2,f)
+						tree_node.setFont(0,f)
 					tree_node.setBackground( 0 , QColor(240, 255, 244) )
 					tree_node.setBackground( 1 , QColor(240, 255, 244) )
 					tree_node.setBackground( 2 , QColor(240, 255, 244) )
@@ -382,7 +413,7 @@ class hdf5Viewer(QMainWindow, Ui_MainWindow,InternalIPKernel):
 					tree_node.setData(1, Qt.DisplayRole, str(data.shape))
 					tree_node.setData(2, Qt.DisplayRole, str(data.dtype))
 				tree_node.setTextAlignment (1, Qt.AlignRight)
-				tree_node.setTextAlignment (2, Qt.AlignRight)
+				tree_node.setTextAlignment (2, Qt.AlignLeft)
 				parent_node.addChild(tree_node)
 				if type(data) == h5py._hl.group.Group:
 					for item in data.itervalues():
@@ -396,7 +427,14 @@ class hdf5Viewer(QMainWindow, Ui_MainWindow,InternalIPKernel):
 			root = ff["/"]
 			topnode.setData(0, Qt.UserRole, root)
 			topnode.setData(1, Qt.DisplayRole, str(os.path.getsize(self.dataDirectory+root.file.filename)))
+			try:
+				lab = root.file.attrs['type']
+			except KeyError:
+				pass
+			else:
+				topnode.setData(2, Qt.DisplayRole, str(lab))
 			topnode.setTextAlignment (1, Qt.AlignRight)
+			topnode.setTextAlignment (1, Qt.AlignLeft)
 			topnode.setBackground( 0 , QColor(231, 234, 255) )
 			topnode.setBackground( 1 , QColor(231, 234, 255) )
 			topnode.setBackground( 2 , QColor(231, 234, 255) )
@@ -653,6 +691,10 @@ class hdf5Viewer(QMainWindow, Ui_MainWindow,InternalIPKernel):
 		self.toggle_data_selection()
 	#############################################################################
 	def closeEvent(self, event):
+		# save current settings
+		h5Settings = {}
+		h5Settings['dataDirectory'] = self.dataDirectory
+		pickle.dump(h5Settings,open('.h5Settings.p','wb'))
 		
 		print 'bye'
 		self.cleanup_consoles()

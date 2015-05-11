@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'hdf5_manager.ui'
 #
-# Created: Mon May  4 14:22:52 2015
+# Created: Mon May 11 12:39:15 2015
 #      by: PyQt4 UI code generator 4.11.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -49,7 +49,7 @@ class Ui_MainWindow(object):
         self.experimentTree.setStyleSheet(_fromUtf8("background-color: rgb(255, 255, 255);"))
         self.experimentTree.setFrameShadow(QtGui.QFrame.Sunken)
         self.experimentTree.setMidLineWidth(0)
-        self.experimentTree.setAnimated(False)
+        self.experimentTree.setAnimated(True)
         self.experimentTree.setObjectName(_fromUtf8("experimentTree"))
         self.experimentTree.headerItem().setTextAlignment(1, QtCore.Qt.AlignHCenter|QtCore.Qt.AlignVCenter|QtCore.Qt.AlignCenter)
         self.experimentTree.headerItem().setTextAlignment(2, QtCore.Qt.AlignHCenter|QtCore.Qt.AlignVCenter|QtCore.Qt.AlignCenter)
