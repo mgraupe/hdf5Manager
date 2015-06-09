@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'hdf5_manager.ui'
 #
-# Created: Tue Jun  9 12:27:08 2015
+# Created: Tue Jun  9 14:14:33 2015
 #      by: PyQt4 UI code generator 4.11.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -96,9 +96,11 @@ class Ui_MainWindow(object):
         self.horizontalWidget1 = QtGui.QWidget(self.gridFrame1)
         self.horizontalWidget1.setObjectName(_fromUtf8("horizontalWidget1"))
         self.horizontalLayout_10 = QtGui.QHBoxLayout(self.horizontalWidget1)
+        self.horizontalLayout_10.setSizeConstraint(QtGui.QLayout.SetNoConstraint)
         self.horizontalLayout_10.setMargin(0)
         self.horizontalLayout_10.setObjectName(_fromUtf8("horizontalLayout_10"))
         self.gridFrame2 = QtGui.QFrame(self.horizontalWidget1)
+        self.gridFrame2.setBaseSize(QtCore.QSize(0, 0))
         self.gridFrame2.setFrameShape(QtGui.QFrame.StyledPanel)
         self.gridFrame2.setLineWidth(1)
         self.gridFrame2.setObjectName(_fromUtf8("gridFrame2"))
@@ -181,7 +183,7 @@ class Ui_MainWindow(object):
         self.plotNameSpaceBtn.setStyleSheet(_fromUtf8("background-color: rgb(240, 240, 240);"))
         self.plotNameSpaceBtn.setObjectName(_fromUtf8("plotNameSpaceBtn"))
         self.horizontalLayout_6.addWidget(self.plotNameSpaceBtn)
-        self.gridLayout_5.addWidget(self.horizontalWidget4, 1, 0, 1, 1)
+        self.gridLayout_5.addWidget(self.horizontalWidget4, 3, 0, 1, 1)
         self.label_6 = QtGui.QLabel(self.gridFrame3)
         font = QtGui.QFont()
         font.setBold(True)
@@ -189,6 +191,10 @@ class Ui_MainWindow(object):
         self.label_6.setFont(font)
         self.label_6.setObjectName(_fromUtf8("label_6"))
         self.gridLayout_5.addWidget(self.label_6, 0, 0, 1, 1)
+        spacerItem = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Maximum)
+        self.gridLayout_5.addItem(spacerItem, 2, 0, 1, 1)
+        spacerItem1 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
+        self.gridLayout_5.addItem(spacerItem1, 1, 0, 1, 1)
         self.horizontalLayout_10.addWidget(self.gridFrame3)
         self.gridLayout_7.addWidget(self.horizontalWidget1, 0, 0, 1, 1)
         self.gridLayout_3.addWidget(self.gridFrame1, 2, 0, 1, 2)
