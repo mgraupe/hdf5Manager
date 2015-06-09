@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'hdf5_manager.ui'
 #
-# Created: Tue Jun  9 14:14:33 2015
+# Created: Tue Jun  9 15:32:17 2015
 #      by: PyQt4 UI code generator 4.11.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -59,6 +59,7 @@ class Ui_MainWindow(object):
         self.dataSetTree.header().setCascadingSectionResizes(False)
         self.dataSetTree.header().setDefaultSectionSize(200)
         self.dataSetTree.header().setMinimumSectionSize(20)
+        self.dataSetTree.header().setStretchLastSection(False)
         self.horizontalLayout.addWidget(self.dataSetTree)
         self.attributesTree = QtGui.QTreeWidget(self.horizontalWidget)
         self.attributesTree.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
@@ -83,6 +84,7 @@ class Ui_MainWindow(object):
         self.attributesTree.header().setDefaultSectionSize(200)
         self.attributesTree.header().setMinimumSectionSize(20)
         self.attributesTree.header().setSortIndicatorShown(True)
+        self.attributesTree.header().setStretchLastSection(False)
         self.horizontalLayout.addWidget(self.attributesTree)
         self.gridLayout_8.addWidget(self.horizontalWidget, 0, 0, 1, 1)
         self.gridLayout_3.addWidget(self.gridFrame, 1, 0, 1, 2)

@@ -85,8 +85,10 @@ class hdf5Viewer(QMainWindow, Ui_MainWindow,InternalIPKernel):
 		self.dataSetTree.setSelectionMode(QAbstractItemView.ExtendedSelection)
 		self.dataSetTree.setColumnWidth(0, 330)
 		self.dataSetTree.setColumnWidth(1, 90)
-		self.dataSetTree.setColumnWidth(2, 70)
+		self.dataSetTree.setColumnWidth(2, 100)
 		self.dataSetTree.sortByColumn(0, Qt.AscendingOrder)
+		
+		self.dataSetTree.header().setResizeMode(0, QHeaderView.Stretch)
 		
 		self.attributesTree.setSelectionMode(QAbstractItemView.ExtendedSelection)
 		self.attributesTree.setColumnWidth(0, 260)
@@ -94,6 +96,7 @@ class hdf5Viewer(QMainWindow, Ui_MainWindow,InternalIPKernel):
 		self.attributesTree.setColumnWidth(2, 70)
 		self.attributesTree.sortByColumn(0, Qt.DescendingOrder)
 		
+		self.attributesTree.header().setResizeMode(1, QHeaderView.Stretch)
 		
 		
 		#self.experimentAttributes.setColumnWidth(0, 140)
@@ -411,15 +414,17 @@ class hdf5Viewer(QMainWindow, Ui_MainWindow,InternalIPKernel):
                                 topnode.setFont(0,f)
                                 topnode.setTextColor(0,textcolor)
                                 topnode.setTextColor(1,textcolor)
+                                topnode.setTextColor(2,textcolor)
                                 root = ff["/"]
                                 topnode.setData(0, Qt.UserRole, root)
                                 topnode.setData(1, Qt.DisplayRole, str(os.path.getsize(self.dataDirectory+root.file.filename)))
-                                try:
-                                        lab = root.file.attrs['type']
-                                except KeyError:
-                                        pass
-                                else:
-                                        topnode.setData(2, Qt.DisplayRole, str(lab))
+                                #try:
+                                #        lab = root.file.attrs['type']
+                                #except KeyError:
+                                #        pass
+                                #else:
+                                #        topnode.setData(2, Qt.DisplayRole, str(lab))
+                                topnode.setData(2, Qt.DisplayRole, str("Problem in HDF5 format"))
                                 topnode.setTextAlignment (1, Qt.AlignRight)
                                 topnode.setTextAlignment (2, Qt.AlignLeft)
                                 for i in range(3):
@@ -457,7 +462,7 @@ class hdf5Viewer(QMainWindow, Ui_MainWindow,InternalIPKernel):
                                 #tree_node.setFlags(Qt.ItemIsEditable)
                                 tree_node.setData(0, Qt.UserRole, att[0])
                                 tree_node.setData(1, Qt.DisplayRole, str(att[1]))
-                                tree_node.setData(2, Qt.DisplayRole, str(att[1].dtype))
+                                tree_node.setData(2, Qt.DisplayRole, (str(att[1].dtype) if type(att[1])!= str else str('str') ) )
                                 for i in range(3):
                                         tree_node.setBackground( i , QColor(col[0], col[1], col[2]) )
                                 parent_node.addChild(tree_node)

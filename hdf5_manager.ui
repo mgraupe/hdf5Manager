@@ -92,6 +92,9 @@
             <attribute name="headerMinimumSectionSize">
              <number>20</number>
             </attribute>
+            <attribute name="headerStretchLastSection">
+             <bool>false</bool>
+            </attribute>
             <column>
              <property name="text">
               <string>DataSets</string>
@@ -176,6 +179,9 @@
             </attribute>
             <attribute name="headerShowSortIndicator" stdset="0">
              <bool>true</bool>
+            </attribute>
+            <attribute name="headerStretchLastSection">
+             <bool>false</bool>
             </attribute>
             <column>
              <property name="text">
