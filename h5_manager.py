@@ -12,6 +12,7 @@ from matplotlib import rcParams
 from matplotlib.ticker import MultipleLocator
 import re
 import pickle
+from functools import partial
 
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
@@ -81,27 +82,35 @@ class hdf5Viewer(QMainWindow, Ui_MainWindow,InternalIPKernel):
 		#window = create_window(MyQtWindow)
 		#curDir = os.getcwd()
 		
-		self.experimentTree.setSelectionMode(QAbstractItemView.ExtendedSelection)
-		self.experimentTree.setColumnWidth(0, 360)
-		self.experimentTree.setColumnWidth(1, 90)
-		self.experimentTree.setColumnWidth(2, 70)
-		self.experimentTree.sortByColumn(0, Qt.AscendingOrder)
+		self.dataSetTree.setSelectionMode(QAbstractItemView.ExtendedSelection)
+		self.dataSetTree.setColumnWidth(0, 330)
+		self.dataSetTree.setColumnWidth(1, 90)
+		self.dataSetTree.setColumnWidth(2, 70)
+		self.dataSetTree.sortByColumn(0, Qt.AscendingOrder)
 		
-		self.experimentAttributes.setColumnWidth(0, 140)
-		self.experimentAttributes.setColumnWidth(1, 215)
-		self.experimentAttributes.setColumnWidth(2, 60)
+		self.attributesTree.setSelectionMode(QAbstractItemView.ExtendedSelection)
+		self.attributesTree.setColumnWidth(0, 260)
+		self.attributesTree.setColumnWidth(1, 160)
+		self.attributesTree.setColumnWidth(2, 70)
+		self.attributesTree.sortByColumn(0, Qt.DescendingOrder)
 		
-		self.groupAttributes.setColumnWidth(0, 140)
-		self.groupAttributes.setColumnWidth(1, 215)
-		self.groupAttributes.setColumnWidth(2, 60)
 		
-		self.dataSetAttributes.setColumnWidth(0, 140)
-		self.dataSetAttributes.setColumnWidth(1, 215)
-		self.dataSetAttributes.setColumnWidth(2, 60)
 		
-		#self.experimentTree.headerView().resizeSection(0, 100)
-		#self.experimentTree.headerView().resizeSection(1, 40)
-		#self.experimentTree.headerView().resizeSection(2, 40)
+		#self.experimentAttributes.setColumnWidth(0, 140)
+		#self.experimentAttributes.setColumnWidth(1, 215)
+		#self.experimentAttributes.setColumnWidth(2, 60)
+		
+		#self.groupAttributes.setColumnWidth(0, 140)
+		#self.groupAttributes.setColumnWidth(1, 215)
+		#self.groupAttributes.setColumnWidth(2, 60)
+		
+		#self.dataSetAttributes.setColumnWidth(0, 140)
+		#self.dataSetAttributes.setColumnWidth(1, 215)
+		#self.dataSetAttributes.setColumnWidth(2, 60)
+		
+		#self.dataSetTree.headerView().resizeSection(0, 100)
+		#self.dataSetTree.headerView().resizeSection(1, 40)
+		#self.dataSetTree.headerView().resizeSection(2, 40)
 		
 		if setExits:
 			DDir = h5Settings['dataDirectory']
@@ -109,11 +118,11 @@ class hdf5Viewer(QMainWindow, Ui_MainWindow,InternalIPKernel):
 				self.dataDirectory = DDir
 				self.fillOutFileList()
 		
-		self.saveAttributeChangeBtn.setEnabled(False)
-		self.restoreAttributesBtn.setEnabled(False)
+		#self.saveAttributeChangeBtn.setEnabled(False)
+		#self.restoreAttributesBtn.setEnabled(False)
 		
-		self.saveNotesBtn.setEnabled(False)
-		self.restoreNotesBtn.setEnabled(False)
+		#self.saveNotesBtn.setEnabled(False)
+		#self.restoreNotesBtn.setEnabled(False)
 		
 	####################################################
         # set status bar
@@ -131,35 +140,36 @@ class hdf5Viewer(QMainWindow, Ui_MainWindow,InternalIPKernel):
 		self.workingDirectory.editingFinished.connect(self.read_edited_directory)
 		
 		# data section changed
-		self.experimentTree.currentItemChanged.connect(self.toggle_data_selection)
+		self.dataSetTree.currentItemChanged.connect(self.toggle_data_selection)
 		
+		aa = np.arange(2)
 		# plot currently active data
-		self.plotDataBtn.clicked.connect(self.plot_data)
-		self.addToPlotBtn.clicked.connect(self.add_to_plot)
+		self.plotDataBtn.clicked.connect(partial(self.plot_data,'new'))
+		self.addToPlotBtn.clicked.connect(partial(self.plot_data,'add'))
 		
 		# Attributes
-		self.experimentAttributes.itemChanged.connect(self.attributeChanges) 
-		self.groupAttributes.itemChanged.connect(self.attributeChanges) 
-		self.dataSetAttributes.itemChanged.connect(self.attributeChanges) 
+		#self.experimentAttributes.itemChanged.connect(self.attributeChanges) 
+		#self.groupAttributes.itemChanged.connect(self.attributeChanges) 
+		#self.dataSetAttributes.itemChanged.connect(self.attributeChanges) 
 		
-		self.addExpRowBtn.clicked.connect(self.addExperimentRow)
-		self.addGroupRowBtn.clicked.connect(self.addGroupRow)
-		self.addDatasetRowBtn.clicked.connect(self.addDatasetRow)
+		#self.addExpRowBtn.clicked.connect(self.addExperimentRow)
+		#self.addGroupRowBtn.clicked.connect(self.addGroupRow)
+		#self.addDatasetRowBtn.clicked.connect(self.addDatasetRow)
 		
-		self.removeExpAttributeBtn.clicked.connect(self.removeExperimentAttribute)
-		self.removeGroupAttributeBtn.clicked.connect(self.removeGroupAttribute)
-		self.removeDatasetAttributeBtn.clicked.connect(self.removeDatasetAttribute)
+		#self.removeExpAttributeBtn.clicked.connect(self.removeExperimentAttribute)
+		#self.removeGroupAttributeBtn.clicked.connect(self.removeGroupAttribute)
+		#self.removeDatasetAttributeBtn.clicked.connect(self.removeDatasetAttribute)
 		
-		self.saveAttributeChangeBtn.clicked.connect(self.saveAttributes)
-		self.restoreAttributesBtn.clicked.connect(self.toggle_data_selection)
+		#self.saveAttributeChangeBtn.clicked.connect(self.saveAttributes)
+		#self.restoreAttributesBtn.clicked.connect(self.toggle_data_selection)
 		
 		# Notes
-		self.experimentNotesValue.textChanged.connect(self.notesChanges)
-		self.groupNotesValue.textChanged.connect(self.notesChanges)
+		#self.experimentNotesValue.textChanged.connect(self.notesChanges)
+		#self.groupNotesValue.textChanged.connect(self.notesChanges)
 		
-		self.saveNotesBtn.clicked.connect(self.saveNotes)
-		self.restoreNotesBtn.clicked.connect(self.toggle_data_selection)
-		
+		#self.saveNotesBtn.clicked.connect(self.saveNotes)
+		#self.restoreNotesBtn.clicked.connect(self.toggle_data_selection)
+
 		# iPython
 		self.launchiPythonBtn.clicked.connect(self.new_qt_console)
 		self.sendToConsoleBtn.clicked.connect(self.add_selection_to_console)
@@ -187,6 +197,18 @@ class hdf5Viewer(QMainWindow, Ui_MainWindow,InternalIPKernel):
 	####################################################
         # reload directory with data files
         def reload_directory(self):
+		#curDir = os.getcwd()
+		#os.chdir(self.dataDirectory)
+		#dataFileList = glob.glob("*.hdf5")
+		#print 'Data file list'
+		#print dataFileList
+		
+		#for n in range(len(dataFileList)):
+		#	ff = h5py.File(dataFileList[n], 'r')
+		#	ff.close()
+		#self.workingDirectory.setText(self.dataDirectory)
+		#os.chdir(curDir)
+		
 		self.fillOutFileList()
 	####################################################
         # manuel edit of directory field
@@ -201,14 +223,14 @@ class hdf5Viewer(QMainWindow, Ui_MainWindow,InternalIPKernel):
 		
 	####################################################
         #  plot data
-	def plot_data(self):
+	def plot_data(self, howToPlot):
 		# obtain currently selected item
-		multipleTempItems = self.experimentTree.selectedItems()
+		multipleTempItems = self.dataSetTree.selectedItems()
 		curItemList = []
 		for i in range(len(multipleTempItems)):
 			curItemList.append(multipleTempItems[i].data(0, Qt.UserRole).toPyObject()) 
 		nSelection = len(multipleTempItems)
-		#tempItem = self.experimentTree.currentItem()
+		#tempItem = self.dataSetTree.currentItem()
 		#print len(tempItem), tempItem
 		#curItem = tempItem.data(0, Qt.UserRole).toPyObject()
 		
@@ -222,57 +244,66 @@ class hdf5Viewer(QMainWindow, Ui_MainWindow,InternalIPKernel):
 		else:
 			selection = False
 		
-		# create figure
-		fig_width = 9 # width in inches
-                fig_height = 6  # height in inches
-                fig_size =  [fig_width,fig_height]
-                params = {'axes.labelsize': 12,
-                        'axes.titlesize': 12,
-                        'font.size': 12,
-                        'xtick.labelsize': 12,
-                        'ytick.labelsize': 12,
-                        'figure.figsize': fig_size,
-                        'savefig.dpi' : 600,
-                        'axes.linewidth' : 1.3,
-                        'ytick.major.size' : 4,      # major tick size in points
-                        'xtick.major.size' : 4      # major tick size in points
-                        #'edgecolor' : None
-                        #'xtick.major.size' : 2,
-                        #'ytick.major.size' : 2,
-                        }
-                rcParams.update(params)
-                
-                self.fig = plt.figure()
-                
-                self.ax1 = self.fig.add_subplot(111)
-                # set title
-                #if nSelection == 1:
-		#ax1.set_title(curItem.file.filename + ' : ' + curItem.name, fontsize=14)
-		#else:
-		self.ax1.set_title(curItemList[0].file.filename + ' : ' + curItemList[0].name, fontsize=14)
+		if howToPlot == 'new':
+			# create figure
+			fig_width = 9 # width in inches
+			fig_height = 6  # height in inches
+			fig_size =  [fig_width,fig_height]
+			params = {'axes.labelsize': 12,
+				'axes.titlesize': 12,
+				'font.size': 12,
+				'xtick.labelsize': 12,
+				'ytick.labelsize': 12,
+				'figure.figsize': fig_size,
+				'savefig.dpi' : 600,
+				'axes.linewidth' : 1.3,
+				'ytick.major.size' : 4,      # major tick size in points
+				'xtick.major.size' : 4      # major tick size in points
+				#'edgecolor' : None
+				#'xtick.major.size' : 2,
+				#'ytick.major.size' : 2,
+				}
+			rcParams.update(params)
+			
+			self.fig = plt.figure()
+			
+			self.ax1 = self.fig.add_subplot(111)
+			# set title
+			#if nSelection == 1:
+			#ax1.set_title(curItem.file.filename + ' : ' + curItem.name, fontsize=14)
+			#else:
+			self.ax1.set_title(curItemList[0].file.filename + ' : ' + curItemList[0].name, fontsize=14)
+		
                 
 		# time-series plot
 		if self.timeSeriesRadioBtn.isChecked():
-			try:
+			# determine time vector
+			if curItemList[0].attrs.__contains__('dt'):
 				dt = float(curItemList[0].attrs['dt'])
-			except KeyError:
-				if selection:
-					a1i = self.ax1.plot(curItemList[0].value[:,dsSelection])
-					plt.legend(iter(a1i),dsSelection,loc=1,frameon=False)
-				else:
-					a1i = self.ax1.plot(curItemList[0].value)
-					plt.legend(iter(a1i),list(range(curItemList[0].shape[1])),loc=1,frameon=False)
-			else:
 				tt = np.linspace(0.,(curItemList[0].shape[0]-1)*dt,curItemList[0].shape[0])
-				if selection:
-					a1i = self.ax1.plot(tt,curItemList[0].value[:,dsSelection],label=dsSelection)
-					plt.legend(iter(a1i),dsSelection,loc=1,frameon=False)
+			elif curItemList[0].attrs.__contains__('start-end-dt'):
+				#[ -1.50000000e+02   2.00000000e+02   1.00000000e-01]
+				tstart = float(curItemList[0].attrs['start-end-dt'][0])
+				tend = float(curItemList[0].attrs['start-end-dt'][0])
+				dt = float(curItemList[0].attrs['start-end-dt'][2])
+				tt = np.linspace(tstart,tstart+(curItemList[0].shape[0]-1)*dt,curItemList[0].shape[0])
+			else:
+				QMessageBox.warning(self, "Warning","Attribute for TimeSeries must have the name 'dt' or 'start-end-dt'!")
+				return
+				#
+			# plot
+			if selection  :
+				a1i = self.ax1.plot(tt,curItemList[0].value[:,dsSelection],label=dsSelection)
+				plt.legend(iter(a1i),dsSelection,loc=1,frameon=False)
+			else:
+				a1i = self.ax1.plot(tt,curItemList[0].value)
+				if (len(curItemList[0].shape)==1):
+					plt.legend(iter(a1i),range(1),loc=1,frameon=False)
 				else:
-					a1i = self.ax1.plot(tt,curItemList[0].value)
 					plt.legend(iter(a1i),list(range(curItemList[0].shape[1])),loc=1,frameon=False)
-				#ax1.plot(tt,curItem.value[:,dsSelection])
-				self.ax1.set_xlabel('time (sec)')
-				#plt.legend(loc=1,frameon=False)
+			#ax1.plot(tt,curItem.value[:,dsSelection])
+			self.ax1.set_xlabel('time (sec)')
+			#plt.legend(loc=1,frameon=False)
 		# plot spikes plot
                 elif self.spikesRadioBtn.isChecked():
 			for ith, trial in enumerate(curItemList):
@@ -292,96 +323,23 @@ class hdf5Viewer(QMainWindow, Ui_MainWindow,InternalIPKernel):
 				a1i = self.ax1.plot(curItemList[0].value)
 				plt.legend(iter(a1i),list(range(curItemList[0].shape[1])),loc=1,frameon=False)
                 
-                self.ax1.spines['top'].set_visible(False)
-		self.ax1.spines['right'].set_visible(False)
-		self.ax1.spines['bottom'].set_position(('outward', 10))
-		self.ax1.spines['left'].set_position(('outward', 10))
-		self.ax1.yaxis.set_ticks_position('left')
-		self.ax1.xaxis.set_ticks_position('bottom')
+                if howToPlot == 'new':
+			self.ax1.spines['top'].set_visible(False)
+			self.ax1.spines['right'].set_visible(False)
+			self.ax1.spines['bottom'].set_position(('outward', 10))
+			self.ax1.spines['left'].set_position(('outward', 10))
+			self.ax1.yaxis.set_ticks_position('left')
+			self.ax1.xaxis.set_ticks_position('bottom')
 		
-                #plt.colorbar(a1i)
-                
-                #ax2 = self.fig.add_subplot(212)
-                #ax2.set_title('Histogram (note max. value is 65532)')
-                #ax2.hist(Sima.flatten()[13:],bins=100)
-                
                 try:
                         plt.show()
-                except AttributeError:
-                        pass
-	####################################################
-        #  plot data
-	def add_to_plot(self):
-		# obtain currently selected item
-		multipleTempItems = self.experimentTree.selectedItems()
-		curItemList = []
-		for i in range(len(multipleTempItems)):
-			curItemList.append(multipleTempItems[i].data(0, Qt.UserRole).toPyObject()) 
-		nSelection = len(multipleTempItems)
-		#tempItem = self.experimentTree.currentItem()
-		#print len(tempItem), tempItem
-		#curItem = tempItem.data(0, Qt.UserRole).toPyObject()
-		
-		# subselection of data to plot specified in GUI
-		if self.dataSetSelection.text():
-			#print self.dataSetSelection.text(), type(self.dataSetSelection.text())
-			dsSelection = list(hyphen_range(str(self.dataSetSelection.text())))
-			# reduce by one since index starts with 0
-			#dsSelection = [i-1 for i in dsSelection]
-			selection = True
-		else:
-			selection = False
-		
-		# time-series plot
-		if self.timeSeriesRadioBtn.isChecked():
-			try:
-				dt = float(curItemList[0].attrs['dt'])
-			except KeyError:
-				if selection:
-					a1i = self.ax1.plot(curItemList[0].value[:,dsSelection])
-					plt.legend(iter(a1i),dsSelection,loc=1,frameon=False)
-				else:
-					a1i = self.ax1.plot(curItemList[0].value)
-					plt.legend(iter(a1i),list(range(curItemList[0].shape[1])),loc=1,frameon=False)
-			else:
-				tt = np.linspace(0.,(curItemList[0].shape[0]-1)*dt,curItemList[0].shape[0])
-				if selection:
-					a1i = self.ax1.plot(tt,curItemList[0].value[:,dsSelection],label=dsSelection)
-					plt.legend(iter(a1i),dsSelection,loc=1,frameon=False)
-				else:
-					a1i = self.ax1.plot(tt,curItemList[0].value)
-					plt.legend(iter(a1i),list(range(curItemList[0].shape[1])),loc=1,frameon=False)
-				#self.ax1.plot(tt,curItem.value[:,dsSelection])
-				self.ax1.set_xlabel('time (sec)')
-				#plt.legend(loc=1,frameon=False)
-		# plot spikes plot
-                elif self.spikesRadioBtn.isChecked():
-			for ith, trial in enumerate(curItemList):
-				self.ax1.vlines(trial.value,  ith + .6, ith + 1.4)
-			self.ax1.set_ylim(.5, len(curItemList) + .5)
-			self.ax1.yaxis.set_major_locator(MultipleLocator(1))
-		# 3D plot
-		elif self.threeDRadioBtn.isChecked():
-			a1i = self.ax1.imshow(curItemList[0].value,origin='lower',interpolation='none')
-			plt.colorbar(a1i)
-		# generic plot
-		else:
-			if selection:
-				a1i = self.ax1.plot(curItemList[0].value[:,dsSelection])
-				plt.legend(iter(a1i),dsSelection,loc=1,frameon=False)
-			else:
-				a1i = self.ax1.plot(curItemList[0].value)
-				plt.legend(iter(a1i),list(range(curItemList[0].shape[1])),loc=1,frameon=False)
-                
-                try:
-                        plt.draw()
                 except AttributeError:
                         pass
 		
 	####################################################
 	def fillOutFileList(self):
 		# clear current list
-		self.experimentTree.clear()
+		self.dataSetTree.clear()
 		
 		curDir = os.getcwd()
 		os.chdir(self.dataDirectory)
@@ -390,59 +348,85 @@ class hdf5Viewer(QMainWindow, Ui_MainWindow,InternalIPKernel):
 		#print dataFileList
 		
 		for n in range(len(dataFileList)):
-			ff = h5py.File(dataFileList[n], 'r+')
-			
-			def recursivePopulateTree(parent_node, data):
-				tree_node = QTreeWidgetItem([data.name])
-				tree_node.setData(0, Qt.UserRole, data)
-				if type(data) == h5py._hl.group.Group:
-					tree_node.setData(1, Qt.DisplayRole, str(len(data.keys())))
-					try:
-						lab = data.attrs['type']
-					except KeyError:
-						pass
-					else:
-						tree_node.setData(2, Qt.DisplayRole, str(lab))
-						f.setBold(True)
-						tree_node.setFont(2,f)
-						tree_node.setFont(0,f)
-					tree_node.setBackground( 0 , QColor(240, 255, 244) )
-					tree_node.setBackground( 1 , QColor(240, 255, 244) )
-					tree_node.setBackground( 2 , QColor(240, 255, 244) )
-				elif type(data) == h5py._hl.dataset.Dataset:
-					tree_node.setData(1, Qt.DisplayRole, str(data.shape))
-					tree_node.setData(2, Qt.DisplayRole, str(data.dtype))
-				tree_node.setTextAlignment (1, Qt.AlignRight)
-				tree_node.setTextAlignment (2, Qt.AlignLeft)
-				parent_node.addChild(tree_node)
-				if type(data) == h5py._hl.group.Group:
-					for item in data.itervalues():
-						recursivePopulateTree(tree_node, item)
-			# add root
-			topnode = QTreeWidgetItem([ff.filename])
-			f = QFont()
-			f.setBold(True)
-			f.setPointSize(11)
-			topnode.setFont(0,f)
-			root = ff["/"]
-			topnode.setData(0, Qt.UserRole, root)
-			topnode.setData(1, Qt.DisplayRole, str(os.path.getsize(self.dataDirectory+root.file.filename)))
+			#print dataFileList[n]
+			ff = h5py.File(dataFileList[n], 'r')
 			try:
-				lab = root.file.attrs['type']
-			except KeyError:
-				pass
-			else:
-				topnode.setData(2, Qt.DisplayRole, str(lab))
-			topnode.setTextAlignment (1, Qt.AlignRight)
-			topnode.setTextAlignment (1, Qt.AlignLeft)
-			topnode.setBackground( 0 , QColor(231, 234, 255) )
-			topnode.setBackground( 1 , QColor(231, 234, 255) )
-			topnode.setBackground( 2 , QColor(231, 234, 255) )
-			self.experimentTree.addTopLevelItem(topnode)
-			#self.experimentTree.addTopLevelItem(1,'1')
-			for item in root.itervalues():
-				recursivePopulateTree(topnode, item)
-		#self.experimentTree.setHeaderLabel(0,self.dataDirectory)
+                                groupN = 0
+                                def recursivePopulateTree(parent_node, data,groupN):
+                                        tree_node = QTreeWidgetItem([data.name])
+                                        tree_node.setData(0, Qt.UserRole, data)
+                                        if type(data) == h5py._hl.group.Group:
+                                                #tree_node.setData(1, Qt.DisplayRole, str(len(data.keys())))
+                                                try:
+                                                        lab = data.attrs['type']
+                                                except KeyError:
+                                                        pass
+                                                else:
+                                                        tree_node.setData(2, Qt.DisplayRole, str(lab))
+                                                        #f.setBold(True)
+                                                        tree_node.setFont(2,f)
+                                                tree_node.setFont(0,f)
+                                                col = ((180+groupN*20), 255, (184+groupN*20))
+                                                for i in range(3):
+                                                        tree_node.setBackground( i , QColor(col[0], col[1], col[2]) )
+                                                groupN+=1
+                                        elif type(data) == h5py._hl.dataset.Dataset:
+                                                tree_node.setData(1, Qt.DisplayRole, str(data.shape))
+                                                tree_node.setData(2, Qt.DisplayRole, str(data.dtype))
+                                        tree_node.setTextAlignment (1, Qt.AlignRight)
+                                        tree_node.setTextAlignment (2, Qt.AlignLeft)
+                                        parent_node.addChild(tree_node)
+                                        if type(data) == h5py._hl.group.Group:
+                                                for item in data.itervalues():
+                                                        recursivePopulateTree(tree_node, item, groupN)
+                                # add root
+                                topnode = QTreeWidgetItem([ff.filename])
+                                f = QFont()
+                                f.setBold(True)
+                                f.setPointSize(11)
+                                topnode.setFont(0,f)
+                                root = ff["/"]
+                                topnode.setData(0, Qt.UserRole, root)
+                                topnode.setData(1, Qt.DisplayRole, str(os.path.getsize(self.dataDirectory+root.file.filename)))
+                                try:
+                                        lab = root.file.attrs['type']
+                                except KeyError:
+                                        pass
+                                else:
+                                        topnode.setData(2, Qt.DisplayRole, str(lab))
+                                topnode.setTextAlignment (1, Qt.AlignRight)
+                                topnode.setTextAlignment (2, Qt.AlignLeft)
+                                for i in range(3):
+                                        topnode.setBackground( i , QColor(208, 230, 255) )
+                                self.dataSetTree.addTopLevelItem(topnode)
+                                #self.dataSetTree.addTopLevelItem(1,'1')
+                                for item in root.itervalues():
+                                        recursivePopulateTree(topnode, item, groupN)
+			except AttributeError, RuntimeError:
+                                topnode = QTreeWidgetItem([ff.filename])
+                                f = QFont()
+                                f.setBold(True)
+                                f.setPointSize(11)
+                                textcolor = QColor("red")
+                                topnode.setFont(0,f)
+                                topnode.setTextColor(0,textcolor)
+                                topnode.setTextColor(1,textcolor)
+                                root = ff["/"]
+                                topnode.setData(0, Qt.UserRole, root)
+                                topnode.setData(1, Qt.DisplayRole, str(os.path.getsize(self.dataDirectory+root.file.filename)))
+                                try:
+                                        lab = root.file.attrs['type']
+                                except KeyError:
+                                        pass
+                                else:
+                                        topnode.setData(2, Qt.DisplayRole, str(lab))
+                                topnode.setTextAlignment (1, Qt.AlignRight)
+                                topnode.setTextAlignment (2, Qt.AlignLeft)
+                                for i in range(3):
+                                        topnode.setBackground( i , QColor(208, 230, 255) )
+                                self.dataSetTree.addTopLevelItem(topnode)
+                                                               
+		#self.dataSetTree.setHeaderLabel(0,self.dataDirectory)
 		self.workingDirectory.setText(self.dataDirectory)
 		os.chdir(curDir)
 		#self.saveAttributeChangeBtn.setEnabled(False)
@@ -459,81 +443,78 @@ class hdf5Viewer(QMainWindow, Ui_MainWindow,InternalIPKernel):
 	####################################################
 	def toggle_data_selection(self):
 		
-		treeItem = self.experimentTree.currentItem()
+		treeItem = self.dataSetTree.currentItem()
 		
 		try:
 			item = treeItem.data(0, Qt.UserRole).toPyObject()
 		except AttributeError:
 			pass
 		else:
-			self.experimentAttributes.clear()
-			self.experimentAttributes.setRowCount(8)
-			self.groupAttributes.clear()
-			self.groupAttributes.setRowCount(5)
-			self.dataSetAttributes.clear()
-			self.dataSetAttributes.setRowCount(3)
-			
-			self.experimentNotesValue.clear()
-			self.groupNotesValue.clear()
-			
-			# experiment  data always applies
-			nE=0
-			rowExperimentN = self.experimentAttributes.rowCount()
-			for eee in item.file.attrs.iteritems():
-				if str(eee[0]) == 'notes':
-					self.experimentNotesValue.setPlainText(str(item.file.attrs['notes']))
-				else:
-					if nE >= (rowExperimentN-2):
-						self.experimentAttributes.insertRow(rowExperimentN)
-						rowExperimentN+=1
-					self.fillOutAttributeTable(self.experimentAttributes,eee,nE)
-					nE+=1
-					
-			
-			# in case a dataset is selected
-			if type(item) == h5py._hl.dataset.Dataset:
-				# attributes of data-set
-				nDS=0
-				rowDataSetN = self.dataSetAttributes.rowCount()
-				for aaa in item.attrs.iteritems():
-					if nDS >= (rowDataSetN-2):
-						self.dataSetAttributes.insertRow(rowDataSetN)
-						rowDataSetN+=1
-					self.fillOutAttributeTable(self.dataSetAttributes,aaa,nDS)
-					nDS+=1
-				# group attributes
-				nG=0
-				rowGroupN = self.groupAttributes.rowCount()
-				for ppp in item.parent.attrs.iteritems():
-					if str(ppp[0]) == 'groupNotes':
-						self.groupNotesValue.setPlainText(str(item.parent.attrs['groupNotes']))
-					else:
-						if nG >= (rowGroupN-2):
-							self.groupAttributes.insertRow(rowGroupN)
-							rowGroupN+=1
-						self.fillOutAttributeTable(self.groupAttributes,ppp,nG)
-						nG+=1
-				self.plotDataBtn.setEnabled(True)
-			# in case group is selected
-			elif type(item) == h5py._hl.group.Group and not item.name == '/':
-				nG=0
-				rowGroupN = self.groupAttributes.rowCount()
-				for ppp in item.attrs.iteritems():
-					if str(ppp[0]) == 'groupNotes':
-						self.groupNotesValue.setPlainText(str(item.attrs['groupNotes']))
-					else:
-						if nG >= (rowGroupN-2):
-							self.groupAttributes.insertRow(rowGroupN)
-							rowGroupN+=1
-						self.fillOutAttributeTable(self.groupAttributes,ppp,nG)
-						nG+=1
-				self.plotDataBtn.setEnabled(False)
-			#
-			self.saveAttributeChangeBtn.setEnabled(False)
-			self.restoreAttributesBtn.setEnabled(False)
-			self.saveNotesBtn.setEnabled(False)
-			self.restoreNotesBtn.setEnabled(False)
-		
+                        self.attributesTree.clear()
+                        def recursivePopulateAttributeTree(parent_node, att, col):
+                                tree_node = QTreeWidgetItem([att[0]])
+                                #tree_node.setFlags(Qt.ItemIsEnabled)
+                                #tree_node.setFlags(Qt.ItemIsEditable)
+                                tree_node.setData(0, Qt.UserRole, att[0])
+                                tree_node.setData(1, Qt.DisplayRole, str(att[1]))
+                                tree_node.setData(2, Qt.DisplayRole, str(att[1].dtype))
+                                for i in range(3):
+                                        tree_node.setBackground( i , QColor(col[0], col[1], col[2]) )
+                                parent_node.addChild(tree_node)
+			# add root
+			topnode = QTreeWidgetItem([item.file.filename])
+			f = QFont()
+			f.setBold(True)
+			f.setPointSize(11)
+			topnode.setFont(0,f)
+			if type(item) ==  h5py._hl.dataset.Dataset:
+                                root = item.parent["/"]
+                        else:
+                                root = item["/"]
+			topnode.setData(0, Qt.UserRole, root)
+                        #
+			for i in range(3):
+                                topnode.setBackground( i , QColor(208, 230, 255) )
+			self.attributesTree.addTopLevelItem(topnode)
+			#self.dataSetTree.addTopLevelItem(1,'1')
+			for att in root.attrs.iteritems():
+                                #print att[0], att[1]
+                                recursivePopulateAttributeTree(topnode,att,(208, 230,255))
+                        # determine dept of selected item in terms of subdirectories
+                        selItem = {}
+                        levelN = 0
+                        selItem[levelN] = item
+                        while ((type(selItem[levelN]) == h5py._hl.dataset.Dataset or type(selItem[levelN]) == h5py._hl.group.Group) and not selItem[levelN].name == '/'):
+                                selItem[levelN+1] = selItem[levelN].parent
+                                levelN+=1
+                        # fill out 
+                        parent_node = topnode
+                        for i in range(1,levelN+1):
+                                tree_node = QTreeWidgetItem([selItem[levelN-i].name])
+                                tree_node.setData(0, Qt.UserRole, selItem[levelN-i])
+                                tree_node.setFont(0,f)
+                                #stree_node.setData(1, Qt.DisplayRole, str(selItem[levelN-i].dtype))
+                                if type(selItem[levelN-i]) == h5py._hl.dataset.Dataset :
+                                        col = (255,255,255)
+                                elif type(selItem[levelN-i]) == h5py._hl.group.Group :
+                                        col = ((180+(i-1)*20), 255, (184+(i-1)*20))   
+                                for n in range(3):
+                                        tree_node.setBackground( n , QColor(col[0], col[1], col[2]) )
+                                parent_node.addChild(tree_node)
+                                #tree_node.setData(1, Qt.DisplayRole, str(selItem[levelN-i].dtype))
+                                for att in selItem[levelN-i].attrs.iteritems():
+                                        recursivePopulateAttributeTree(tree_node,att,col)
+                                #
+                                #tree_node = QTreeWidgetItem([selItem[levelN-i].name])
+                                #tree_node.setData(0, Qt.UserRole, selItem[topnode-i])
+                                #tree_node.setData(1, Qt.DisplayRole, str(data.shape))
+                                parent_node = tree_node
+                        
+                        self.attributesTree.expandAll()
+                        #item.parent
+			#for item in root.itervalues():
+			#	recursivePopulateTree(topnode, item,groupN)
+                        
 	#############################################################################
 	def attributeChanges(self):
 		self.saveAttributeChangeBtn.setEnabled(True)
@@ -563,7 +544,7 @@ class hdf5Viewer(QMainWindow, Ui_MainWindow,InternalIPKernel):
 	#############################################################################
 	def saveAttributes(self):
 		# get selected item
-		treeItem = self.experimentTree.currentItem()
+		treeItem = self.dataSetTree.currentItem()
 		selItem = treeItem.data(0, Qt.UserRole).toPyObject()
 		# save experiment attributes
 		self.delExperimentAttributes(selItem)
@@ -618,7 +599,7 @@ class hdf5Viewer(QMainWindow, Ui_MainWindow,InternalIPKernel):
 	#############################################################################
 	def saveNotes(self):
 		# get selected item
-		treeItem = self.experimentTree.currentItem()
+		treeItem = self.dataSetTree.currentItem()
 		item = treeItem.data(0, Qt.UserRole).toPyObject()
 		
 		#try:
@@ -639,7 +620,7 @@ class hdf5Viewer(QMainWindow, Ui_MainWindow,InternalIPKernel):
 	#############################################################################
 	def add_selection_to_console(self):
 		# get selected item
-		treeItem = self.experimentTree.currentItem()
+		treeItem = self.dataSetTree.currentItem()
 		item = treeItem.data(0, Qt.UserRole).toPyObject()
 		self.addData(item.value)
 	#############################################################################
@@ -648,7 +629,7 @@ class hdf5Viewer(QMainWindow, Ui_MainWindow,InternalIPKernel):
 		self.experimentAttributes.insertRow(rowExperimentN)
 	#############################################################################
 	def removeExperimentAttribute(self):
-		treeItem = self.experimentTree.currentItem()
+		treeItem = self.dataSetTree.currentItem()
 		selItem = treeItem.data(0, Qt.UserRole).toPyObject()
 		
 		row = self.experimentAttributes.currentItem().row()
@@ -662,7 +643,7 @@ class hdf5Viewer(QMainWindow, Ui_MainWindow,InternalIPKernel):
 		self.groupAttributes.insertRow(rowGroupN)
 	#############################################################################
 	def removeGroupAttribute(self):
-		treeItem = self.experimentTree.currentItem()
+		treeItem = self.dataSetTree.currentItem()
 		selItem = treeItem.data(0, Qt.UserRole).toPyObject()
 		
 		row = self.groupAttributes.currentItem().row()
@@ -680,7 +661,7 @@ class hdf5Viewer(QMainWindow, Ui_MainWindow,InternalIPKernel):
 		self.dataSetAttributes.insertRow(rowDatasetN)
 	#############################################################################
 	def removeDatasetAttribute(self):
-		treeItem = self.experimentTree.currentItem()
+		treeItem = self.dataSetTree.currentItem()
 		selItem = treeItem.data(0, Qt.UserRole).toPyObject()
 		
 		row = self.dataSetAttributes.currentItem().row()

@@ -2,14 +2,14 @@
 hdf5 Data Manager
 =================
 
-The hdf5 Data Manager can be used for viewing, editing, and displaying data and attributes 
+The hdf5 Data Manager can be used for viewing, displaying and analyzing data as well as viewing attributes 
 stored in the hdf5 format. The viewer is generic and supports any data structure stored in 
 the hdf5 format.
 
 Features
 -----------
 * Groups, Data-sets and Attributes of hdf5 files in a directory can be viewed. File size, Group member number and Data-set shape are read out and displayed. 
-* Attributes can be added and removed. 
+* Attributes and their type are displayed. 
 * Data can be plotted as generic plot, time-series, spikes and 3D plot (3rd dimension as color code).
 * Data can be send to an iPython console which allows further analysis, manipulation or displaying. 
 
