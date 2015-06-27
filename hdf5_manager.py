@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'hdf5_manager.ui'
 #
-# Created: Sun Jun 14 23:03:43 2015
+# Created: Sat Jun 27 15:26:26 2015
 #      by: PyQt4 UI code generator 4.11.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -248,18 +248,6 @@ class Ui_MainWindow(object):
         self.currentSelectionValue.setStyleSheet(_fromUtf8("background-color: rgb(255, 255, 255);"))
         self.currentSelectionValue.setObjectName(_fromUtf8("currentSelectionValue"))
         self.horizontalLayout_4.addWidget(self.currentSelectionValue)
-        self.checkBox = QtGui.QCheckBox(self.horizontalWidget6)
-        font = QtGui.QFont()
-        font.setBold(True)
-        font.setWeight(75)
-        self.checkBox.setFont(font)
-        self.checkBox.setObjectName(_fromUtf8("checkBox"))
-        self.horizontalLayout_4.addWidget(self.checkBox)
-        self.currentFilterValue = QtGui.QLineEdit(self.horizontalWidget6)
-        self.currentFilterValue.setMaximumSize(QtCore.QSize(250, 16777215))
-        self.currentFilterValue.setStyleSheet(_fromUtf8("background-color: rgb(255, 255, 255);"))
-        self.currentFilterValue.setObjectName(_fromUtf8("currentFilterValue"))
-        self.horizontalLayout_4.addWidget(self.currentFilterValue)
         self.gridLayout_2.addWidget(self.horizontalWidget6, 0, 0, 1, 1)
         self.gridLayout_3.addWidget(self.gridFrame5, 2, 0, 1, 2)
         MainWindow.setCentralWidget(self.centralwidget)
@@ -298,5 +286,4 @@ class Ui_MainWindow(object):
         self.attributesTree.headerItem().setText(1, _translate("MainWindow", "Value", None))
         self.attributesTree.headerItem().setText(2, _translate("MainWindow", "Type", None))
         self.label.setText(_translate("MainWindow", "Current selection", None))
-        self.checkBox.setText(_translate("MainWindow", "Filter", None))
 
