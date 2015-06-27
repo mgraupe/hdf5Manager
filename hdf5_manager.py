@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'hdf5_manager.ui'
 #
-# Created: Sat Jun 27 15:26:26 2015
+# Created: Sat Jun 27 15:34:01 2015
 #      by: PyQt4 UI code generator 4.11.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -285,5 +285,5 @@ class Ui_MainWindow(object):
         self.attributesTree.headerItem().setText(0, _translate("MainWindow", "Attributes", None))
         self.attributesTree.headerItem().setText(1, _translate("MainWindow", "Value", None))
         self.attributesTree.headerItem().setText(2, _translate("MainWindow", "Type", None))
-        self.label.setText(_translate("MainWindow", "Current selection", None))
+        self.label.setText(_translate("MainWindow", "Selection", None))
 
