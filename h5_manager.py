@@ -455,6 +455,7 @@ class hdf5Viewer(QMainWindow, Ui_MainWindow,InternalIPKernel):
 		except AttributeError:
 			pass
 		else:
+                        self.currentSelectionValue.setText(item.file.filename+str(item.name))
                         self.attributesTree.clear()
                         def recursivePopulateAttributeTree(parent_node, att, col):
                                 tree_node = QTreeWidgetItem([att[0]])
