@@ -76,6 +76,9 @@
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
+            <property name="placeholderText">
+             <string>Directory of hdf5 files</string>
+            </property>
            </widget>
           </item>
          </layout>
@@ -207,10 +210,13 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QLineEdit" name="dataSetSelection">
-                  <property name="styleSheet">
-                   <string notr="true">background-color: rgb(255, 255, 255);</string>
+                 <widget class="QRadioButton" name="ImageStackRadioBtn">
+                  <property name="text">
+                   <string>ImageStack</string>
                   </property>
+                  <attribute name="buttonGroup">
+                   <string notr="true">plottingChoice</string>
+                  </attribute>
                  </widget>
                 </item>
                </layout>
@@ -222,6 +228,22 @@
                 <property name="margin">
                  <number>0</number>
                 </property>
+                <item>
+                 <widget class="QLineEdit" name="dataSetSelection">
+                  <property name="maximumSize">
+                   <size>
+                    <width>200</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">background-color: rgb(255, 255, 255);</string>
+                  </property>
+                  <property name="placeholderText">
+                   <string>Subselection e.g. 0,2,4-6</string>
+                  </property>
+                 </widget>
+                </item>
                 <item>
                  <widget class="QPushButton" name="plotDataBtn">
                   <property name="styleSheet">

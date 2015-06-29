@@ -10,6 +10,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import rcParams
 from matplotlib.ticker import MultipleLocator
+from matplotlib.widgets import Slider, RadioButtons
 import re
 import pickle
 from functools import partial
@@ -315,9 +316,26 @@ class hdf5Viewer(QMainWindow, Ui_MainWindow,InternalIPKernel):
 			self.ax1.yaxis.set_major_locator(MultipleLocator(1))
 		# 3D plot
 		elif self.threeDRadioBtn.isChecked():
-			a1i = self.ax1.imshow(curItemList[0].value,origin='lower',interpolation='none')
+			a1i = self.ax1.imshow(curItemList[0].value,cmap='gray',origin='lower',interpolation='none')
 			plt.colorbar(a1i)
-		# generic plot
+		# 3D plot
+		elif self.ImageStackRadioBtn.isChecked():
+                        plt.subplots_adjust(left=0.2, bottom=0.25)
+                        frame = 0
+                        a1i = self.ax1.imshow(curItemList[0].value[frame,:,:],origin='lower',cmap='gray')
+			#a1i = self.ax1.imshow(curItemList[0].value,origin='lower',interpolation='none')
+			axcolor = 'lightgoldenrodyellow'
+                        axframe = plt.axes([0.25, 0.1, 0.65, 0.03], axisbg=axcolor)
+                        sframe = Slider(axframe, 'Frame #', 0, len(curItemList[0].value)-1, valinit=0,valfmt=u'%0.0f')
+			#plt.colorbar(a1i)
+			def update(val):
+                                frame = np.around(sframe.val)
+                                a1i.set_data(curItemList[0].value[frame,:,:])
+			sframe.on_changed(update)
+			#
+			self.ax1.set_xlabel('pixel')
+			self.ax1.set_ylabel('pixel')
+                # generic plot
 		else:
 			if selection:
 				a1i = self.ax1.plot(curItemList[0].value[:,dsSelection])

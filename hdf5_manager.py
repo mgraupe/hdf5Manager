@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'hdf5_manager.ui'
 #
-# Created: Sat Jun 27 15:34:01 2015
+# Created: Mon Jun 29 15:28:47 2015
 #      by: PyQt4 UI code generator 4.11.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -114,16 +114,21 @@ class Ui_MainWindow(object):
         self.threeDRadioBtn.setObjectName(_fromUtf8("threeDRadioBtn"))
         self.plottingChoice.addButton(self.threeDRadioBtn)
         self.horizontalLayout_5.addWidget(self.threeDRadioBtn)
-        self.dataSetSelection = QtGui.QLineEdit(self.horizontalWidget2)
-        self.dataSetSelection.setStyleSheet(_fromUtf8("background-color: rgb(255, 255, 255);"))
-        self.dataSetSelection.setObjectName(_fromUtf8("dataSetSelection"))
-        self.horizontalLayout_5.addWidget(self.dataSetSelection)
+        self.ImageStackRadioBtn = QtGui.QRadioButton(self.horizontalWidget2)
+        self.ImageStackRadioBtn.setObjectName(_fromUtf8("ImageStackRadioBtn"))
+        self.plottingChoice.addButton(self.ImageStackRadioBtn)
+        self.horizontalLayout_5.addWidget(self.ImageStackRadioBtn)
         self.gridLayout_6.addWidget(self.horizontalWidget2, 1, 0, 1, 1)
         self.horizontalWidget3 = QtGui.QWidget(self.gridFrame2)
         self.horizontalWidget3.setObjectName(_fromUtf8("horizontalWidget3"))
         self.horizontalLayout_3 = QtGui.QHBoxLayout(self.horizontalWidget3)
         self.horizontalLayout_3.setMargin(0)
         self.horizontalLayout_3.setObjectName(_fromUtf8("horizontalLayout_3"))
+        self.dataSetSelection = QtGui.QLineEdit(self.horizontalWidget3)
+        self.dataSetSelection.setMaximumSize(QtCore.QSize(200, 16777215))
+        self.dataSetSelection.setStyleSheet(_fromUtf8("background-color: rgb(255, 255, 255);"))
+        self.dataSetSelection.setObjectName(_fromUtf8("dataSetSelection"))
+        self.horizontalLayout_3.addWidget(self.dataSetSelection)
         self.plotDataBtn = QtGui.QPushButton(self.horizontalWidget3)
         self.plotDataBtn.setStyleSheet(_fromUtf8("background-color: rgb(240, 240, 240);"))
         self.plotDataBtn.setObjectName(_fromUtf8("plotDataBtn"))
@@ -266,11 +271,14 @@ class Ui_MainWindow(object):
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow", None))
         self.loadDirectoryBtn.setText(_translate("MainWindow", "Load directory", None))
         self.reloadDirectoryBtn.setText(_translate("MainWindow", "Reload", None))
+        self.workingDirectory.setPlaceholderText(_translate("MainWindow", "Directory of hdf5 files", None))
         self.label_5.setText(_translate("MainWindow", "Plotting", None))
         self.genericRadioBtn.setText(_translate("MainWindow", "Generic", None))
         self.timeSeriesRadioBtn.setText(_translate("MainWindow", "TimeSeries", None))
         self.spikesRadioBtn.setText(_translate("MainWindow", "Spikes", None))
         self.threeDRadioBtn.setText(_translate("MainWindow", "3D", None))
+        self.ImageStackRadioBtn.setText(_translate("MainWindow", "ImageStack", None))
+        self.dataSetSelection.setPlaceholderText(_translate("MainWindow", "Subselection e.g. 0,2,4-6", None))
         self.plotDataBtn.setText(_translate("MainWindow", "Plot data", None))
         self.addToPlotBtn.setText(_translate("MainWindow", "Add to plot", None))
         self.launchiPythonBtn.setText(_translate("MainWindow", "Launch iPython", None))
