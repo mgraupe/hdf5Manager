@@ -192,7 +192,7 @@ class hdf5Viewer(QMainWindow, Ui_MainWindow,InternalIPKernel):
 		
 		try:
 			DDir = self.dataDirectory
-		except NameError:
+		except (AttributeError, NameError):
 			dataDirNew = str(QFileDialog.getExistingDirectory(self, "Select Data Directory","/home/mgraupe/Documents/BTsync/brandon_data/"))
 		else:
 			dataDirNew = str(QFileDialog.getExistingDirectory(self, "Select Data Directory", DDir))
@@ -201,7 +201,7 @@ class hdf5Viewer(QMainWindow, Ui_MainWindow,InternalIPKernel):
 		if len(dataDirNew)>0:
 			#self.dataDirEdit.setText(dataDirNew)
 			print dataDirNew
-			self.dataDirectory = dataDirNew
+			self.dataDirectory = dataDirNew + self.separator
 			self.fillOutFileList() 
 		
 	####################################################
@@ -372,6 +372,8 @@ class hdf5Viewer(QMainWindow, Ui_MainWindow,InternalIPKernel):
 		os.chdir(self.dataDirectory)
 		dataFileList = glob.glob('*.hdf5')
 		dataFileList += glob.glob('*.h5')
+		dataFileList += glob.glob('*.ma')
+		#print self.dataDirectory
 		#print 'Data file list'
 		#print dataFileList
 		
@@ -381,7 +383,7 @@ class hdf5Viewer(QMainWindow, Ui_MainWindow,InternalIPKernel):
 			topnode = QTreeWidgetItem([ff.filename])
                         f = QFont()
                         f.setBold(True)
-                        f.setPointSize(11)
+                        f.setPointSize(10)
                         topnode.setFont(0,f)
                         root = ff["/"]
                         topnode.setData(0, Qt.UserRole, root)
@@ -483,7 +485,7 @@ class hdf5Viewer(QMainWindow, Ui_MainWindow,InternalIPKernel):
 			topnode = QTreeWidgetItem([item.file.filename])
 			f = QFont()
 			f.setBold(True)
-			f.setPointSize(11)
+			f.setPointSize(10)
 			topnode.setFont(0,f)
 			if type(item) ==  h5py._hl.dataset.Dataset:
                                 root = item.parent["/"]
