@@ -387,7 +387,6 @@ class hdf5Viewer(QMainWindow, Ui_MainWindow,InternalIPKernel):
 			topnode = QTreeWidgetItem([ff.filename])
                         f = QFont()
                         f.setBold(True)
-                        f.setPointSize(11)
                         topnode.setFont(0,f)
                         root = ff["/"]
                         topnode.setData(0, Qt.UserRole, root)
@@ -489,7 +488,6 @@ class hdf5Viewer(QMainWindow, Ui_MainWindow,InternalIPKernel):
 			topnode = QTreeWidgetItem([item.file.filename])
 			f = QFont()
 			f.setBold(True)
-			f.setPointSize(11)
 			topnode.setFont(0,f)
 			if type(item) ==  h5py._hl.dataset.Dataset:
                                 root = item.parent["/"]
