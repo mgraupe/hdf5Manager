@@ -7,6 +7,7 @@ import h5py
 import pdb
 import time
 import numpy as np
+import platform
 import matplotlib.pyplot as plt
 from matplotlib import rcParams
 from matplotlib.ticker import MultipleLocator
@@ -79,6 +80,11 @@ class hdf5Viewer(QMainWindow, Ui_MainWindow,InternalIPKernel):
 		else:
 			setExits = True
 		
+		# determine directory separator depending on OS
+                if platform.system()=='Windows':
+                        self.separator = '\\'
+		else:
+                        self.separator = '/'  
 		#self.ipk = InternalIPKernel.init_ipkernel('qt')
 		#window = create_window(MyQtWindow)
 		#curDir = os.getcwd()
@@ -187,7 +193,7 @@ class hdf5Viewer(QMainWindow, Ui_MainWindow,InternalIPKernel):
 		try:
 			DDir = self.dataDirectory
 		except NameError:
-			dataDirNew = str(QFileDialog.getExistingDirectory(self, "Select Data Directory","/home/mgraupe/Documents/BTsync/brandon_data"))
+			dataDirNew = str(QFileDialog.getExistingDirectory(self, "Select Data Directory","/home/mgraupe/Documents/BTsync/brandon_data/"))
 		else:
 			dataDirNew = str(QFileDialog.getExistingDirectory(self, "Select Data Directory", DDir))
 		#fname = QtGui.QFileDialog.getOpenFileName(self, 'Open file', '/home')
@@ -195,7 +201,7 @@ class hdf5Viewer(QMainWindow, Ui_MainWindow,InternalIPKernel):
 		if len(dataDirNew)>0:
 			#self.dataDirEdit.setText(dataDirNew)
 			print dataDirNew
-			self.dataDirectory = dataDirNew + '/'
+			self.dataDirectory = dataDirNew
 			self.fillOutFileList() 
 		
 	####################################################
@@ -220,8 +226,8 @@ class hdf5Viewer(QMainWindow, Ui_MainWindow,InternalIPKernel):
 		
 		self.dataDirectory = str(self.workingDirectory.text())
 		# add / if not existing
-		if self.dataDirectory and self.dataDirectory[-1] != '/':
-			self.dataDirectory += '/'
+		if self.dataDirectory and self.dataDirectory[-1] != self.separator:
+			self.dataDirectory += self.separator
 		if self.dataDirectory:
 			self.fillOutFileList()
 		
@@ -364,13 +370,28 @@ class hdf5Viewer(QMainWindow, Ui_MainWindow,InternalIPKernel):
 		
 		curDir = os.getcwd()
 		os.chdir(self.dataDirectory)
-		dataFileList = glob.glob("*.hdf5")
+		dataFileList = glob.glob('*.hdf5')
+		dataFileList += glob.glob('*.h5')
 		#print 'Data file list'
 		#print dataFileList
 		
 		for n in range(len(dataFileList)):
 			#print dataFileList[n]
 			ff = h5py.File(dataFileList[n], 'r')
+			topnode = QTreeWidgetItem([ff.filename])
+                        f = QFont()
+                        f.setBold(True)
+                        f.setPointSize(11)
+                        topnode.setFont(0,f)
+                        root = ff["/"]
+                        topnode.setData(0, Qt.UserRole, root)
+                        topnode.setData(1, Qt.DisplayRole, str(os.path.getsize(self.dataDirectory+root.file.filename)))
+                        topnode.setTextAlignment (1, Qt.AlignRight)
+                        topnode.setTextAlignment (2, Qt.AlignLeft)
+                        for i in range(3):
+                                topnode.setBackground( i , QColor(208, 230, 255) )
+                        
+                        #
 			try:
                                 groupN = 0
                                 def recursivePopulateTree(parent_node, data,groupN):
@@ -401,54 +422,27 @@ class hdf5Viewer(QMainWindow, Ui_MainWindow,InternalIPKernel):
                                                 for item in data.itervalues():
                                                         recursivePopulateTree(tree_node, item, groupN)
                                 # add root
-                                topnode = QTreeWidgetItem([ff.filename])
-                                f = QFont()
-                                f.setBold(True)
-                                f.setPointSize(11)
-                                topnode.setFont(0,f)
-                                root = ff["/"]
-                                topnode.setData(0, Qt.UserRole, root)
-                                topnode.setData(1, Qt.DisplayRole, str(os.path.getsize(self.dataDirectory+root.file.filename)))
                                 try:
                                         lab = root.file.attrs['type']
                                 except KeyError:
                                         pass
                                 else:
                                         topnode.setData(2, Qt.DisplayRole, str(lab))
-                                topnode.setTextAlignment (1, Qt.AlignRight)
-                                topnode.setTextAlignment (2, Qt.AlignLeft)
-                                for i in range(3):
-                                        topnode.setBackground( i , QColor(208, 230, 255) )
+                                #
                                 self.dataSetTree.addTopLevelItem(topnode)
-                                #self.dataSetTree.addTopLevelItem(1,'1')
+                                
                                 for item in root.itervalues():
                                         recursivePopulateTree(topnode, item, groupN)
+
+                        # show file name in red in case error occurs during hdf5 file parsing
 			except AttributeError, RuntimeError:
-                                topnode = QTreeWidgetItem([ff.filename])
-                                f = QFont()
-                                f.setBold(True)
-                                f.setPointSize(11)
                                 textcolor = QColor("red")
-                                topnode.setFont(0,f)
                                 topnode.setTextColor(0,textcolor)
                                 topnode.setTextColor(1,textcolor)
                                 topnode.setTextColor(2,textcolor)
-                                root = ff["/"]
-                                topnode.setData(0, Qt.UserRole, root)
-                                topnode.setData(1, Qt.DisplayRole, str(os.path.getsize(self.dataDirectory+root.file.filename)))
-                                #try:
-                                #        lab = root.file.attrs['type']
-                                #except KeyError:
-                                #        pass
-                                #else:
-                                #        topnode.setData(2, Qt.DisplayRole, str(lab))
                                 topnode.setData(2, Qt.DisplayRole, str("Problem in HDF5 format"))
-                                topnode.setTextAlignment (1, Qt.AlignRight)
-                                topnode.setTextAlignment (2, Qt.AlignLeft)
-                                for i in range(3):
-                                        topnode.setBackground( i , QColor(208, 230, 255) )
                                 self.dataSetTree.addTopLevelItem(topnode)
-                                                               
+                                
 		#self.dataSetTree.setHeaderLabel(0,self.dataDirectory)
 		self.workingDirectory.setText(self.dataDirectory)
 		os.chdir(curDir)
