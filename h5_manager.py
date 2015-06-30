@@ -88,7 +88,7 @@ class hdf5Viewer(QMainWindow, Ui_MainWindow,InternalIPKernel):
 		#self.ipk = InternalIPKernel.init_ipkernel('qt')
 		#window = create_window(MyQtWindow)
 		#curDir = os.getcwd()
-		
+
 		self.dataSetTree.setSelectionMode(QAbstractItemView.ExtendedSelection)
 		self.dataSetTree.setColumnWidth(0, 330)
 		self.dataSetTree.setColumnWidth(1, 90)
@@ -254,6 +254,8 @@ class hdf5Viewer(QMainWindow, Ui_MainWindow,InternalIPKernel):
 		else:
 			selection = False
 		
+		
+		
 		if howToPlot == 'new':
 			# create figure
 			fig_width = 9 # width in inches
@@ -326,18 +328,21 @@ class hdf5Viewer(QMainWindow, Ui_MainWindow,InternalIPKernel):
 			plt.colorbar(a1i)
 		# 3D plot
 		elif self.ImageStackRadioBtn.isChecked():
+
                         plt.subplots_adjust(left=0.2, bottom=0.25)
                         frame = 0
                         a1i = self.ax1.imshow(curItemList[0].value[frame,:,:],origin='lower',cmap='gray')
 			#a1i = self.ax1.imshow(curItemList[0].value,origin='lower',interpolation='none')
 			axcolor = 'lightgoldenrodyellow'
                         axframe = plt.axes([0.25, 0.1, 0.65, 0.03], axisbg=axcolor)
-                        sframe = Slider(axframe, 'Frame #', 0, len(curItemList[0].value)-1, valinit=0,valfmt=u'%0.0f')
-			#plt.colorbar(a1i)
-			def update(val):
-                                frame = np.around(sframe.val)
+                        self.sframe = Slider(axframe, 'Frame #', 0, len(curItemList[0].value)-1, valinit=0,valfmt=u'%0.0f')
+			# update function for the slider
+                        def update(val):
+                                print val
+                                frame = np.around(self.sframe.val)
                                 a1i.set_data(curItemList[0].value[frame,:,:])
-			sframe.on_changed(update)
+                                #plt.show()
+			self.sframe.on_changed(update)
 			#
 			self.ax1.set_xlabel('pixel')
 			self.ax1.set_ylabel('pixel')
@@ -357,12 +362,11 @@ class hdf5Viewer(QMainWindow, Ui_MainWindow,InternalIPKernel):
 			self.ax1.spines['left'].set_position(('outward', 10))
 			self.ax1.yaxis.set_ticks_position('left')
 			self.ax1.xaxis.set_ticks_position('bottom')
-		
+                
                 try:
                         plt.show()
                 except AttributeError:
                         pass
-		
 	####################################################
 	def fillOutFileList(self):
 		# clear current list
