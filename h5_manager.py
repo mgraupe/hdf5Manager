@@ -353,7 +353,10 @@ class hdf5Viewer(QMainWindow, Ui_MainWindow,InternalIPKernel):
 				plt.legend(iter(a1i),dsSelection,loc=1,frameon=False)
 			else:
 				a1i = self.ax1.plot(curItemList[0].value)
-				plt.legend(iter(a1i),list(range(curItemList[0].shape[1])),loc=1,frameon=False)
+				if nSelection>1:
+					plt.legend(iter(a1i),list(range(curItemList[0].shape[1])),loc=1,frameon=False)
+				else:
+					plt.legend(iter(a1i),list(curItemList[0]),loc=1,frameon=False)
                 
                 if howToPlot == 'new':
 			self.ax1.spines['top'].set_visible(False)
