@@ -486,6 +486,7 @@ class hdf5Viewer(QMainWindow, Ui_MainWindow,InternalIPKernel):
                 for i in range(3):
                     tree_node.setBackground( i , QColor(col[0], col[1], col[2]) )
                 parent_node.addChild(tree_node)
+            
             # add root
             topnode = QTreeWidgetItem([item.file.filename])
             f = QFont()
@@ -504,38 +505,40 @@ class hdf5Viewer(QMainWindow, Ui_MainWindow,InternalIPKernel):
             for att in root.attrs.iteritems():
                 #print att[0], att[1]
                 recursivePopulateAttributeTree(topnode,att,(208, 230,255))
-                # determine dept of selected item in terms of subdirectories
-                selItem = {}
-                levelN = 0
-                selItem[levelN] = item
-                while ((type(selItem[levelN]) == h5py._hl.dataset.Dataset or type(selItem[levelN]) == h5py._hl.group.Group) and not selItem[levelN].name == '/'):
-                    selItem[levelN+1] = selItem[levelN].parent
-                    levelN+=1
-                # fill out 
-                parent_node = topnode
-                for i in range(1,levelN+1):
-                    tree_node = QTreeWidgetItem([selItem[levelN-i].name])
-                    tree_node.setData(0, Qt.UserRole, selItem[levelN-i])
-                    tree_node.setFont(0,f)
-                    #stree_node.setData(1, Qt.DisplayRole, str(selItem[levelN-i].dtype))
-                    if type(selItem[levelN-i]) == h5py._hl.dataset.Dataset :
-                            col = (255,255,255)
-                    elif type(selItem[levelN-i]) == h5py._hl.group.Group :
-                            col = ((180+(i-1)*20), 255, (184+(i-1)*20))   
-                    for n in range(3):
-                            tree_node.setBackground( n , QColor(col[0], col[1], col[2]) )
-                    parent_node.addChild(tree_node)
-                    #tree_node.setData(1, Qt.DisplayRole, str(selItem[levelN-i].dtype))
-                    for att in selItem[levelN-i].attrs.iteritems():
-                            recursivePopulateAttributeTree(tree_node,att,col)
-                    #
-                    #tree_node = QTreeWidgetItem([selItem[levelN-i].name])
-                    #tree_node.setData(0, Qt.UserRole, selItem[topnode-i])
-                    #tree_node.setData(1, Qt.DisplayRole, str(data.shape))
-                    parent_node = tree_node
-                
-                self.attributesTree.expandAll()
-                #item.parent
+            # determine dept of selected item in terms of subdirectories
+            selItem = {}
+            levelN = 0
+            selItem[levelN] = item
+            while ((type(selItem[levelN]) == h5py._hl.dataset.Dataset or type(selItem[levelN]) == h5py._hl.group.Group) and not selItem[levelN].name == '/'):
+                selItem[levelN+1] = selItem[levelN].parent
+                levelN+=1
+            # fill out 
+            parent_node = topnode
+            for i in range(1,levelN+1):
+                #print i, selItem[levelN-i].name
+                tree_node = QTreeWidgetItem([selItem[levelN-i].name])
+                tree_node.setData(0, Qt.UserRole, selItem[levelN-i])
+                tree_node.setFont(0,f)
+                #stree_node.setData(1, Qt.DisplayRole, str(selItem[levelN-i].dtype))
+                if type(selItem[levelN-i]) == h5py._hl.dataset.Dataset :
+                    col = (255,255,255)
+                elif type(selItem[levelN-i]) == h5py._hl.group.Group :
+                    col = ((180+(i-1)*20), 255, (184+(i-1)*20))   
+                for n in range(3):
+                    tree_node.setBackground( n , QColor(col[0], col[1], col[2]) )
+                parent_node.insertChild(i,tree_node)
+                #tree_node.setData(1, Qt.DisplayRole, str(selItem[levelN-i].dtype))
+                for att in selItem[levelN-i].attrs.iteritems():
+                    #print att[0], att[1] 
+                    recursivePopulateAttributeTree(tree_node,att,col)
+                #
+                #tree_node = QTreeWidgetItem([selItem[levelN-i].name])
+                #tree_node.setData(0, Qt.UserRole, selItem[topnode-i])
+                #tree_node.setData(1, Qt.DisplayRole, str(data.shape))
+                parent_node = tree_node
+            
+            self.attributesTree.expandAll()
+            #item.parent
             #for item in root.itervalues():
             #	recursivePopulateTree(topnode, item,groupN)
                         

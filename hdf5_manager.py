@@ -2,8 +2,7 @@
 
 # Form implementation generated from reading ui file 'hdf5_manager.ui'
 #
-# Created: Mon Jun 29 15:28:47 2015
-#      by: PyQt4 UI code generator 4.11.3
+# Created by: PyQt4 UI code generator 4.11.4
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -93,8 +92,8 @@ class Ui_MainWindow(object):
         self.horizontalWidget2 = QtGui.QWidget(self.gridFrame2)
         self.horizontalWidget2.setObjectName(_fromUtf8("horizontalWidget2"))
         self.horizontalLayout_5 = QtGui.QHBoxLayout(self.horizontalWidget2)
-        self.horizontalLayout_5.setSpacing(5)
         self.horizontalLayout_5.setContentsMargins(5, 3, 5, 3)
+        self.horizontalLayout_5.setSpacing(5)
         self.horizontalLayout_5.setObjectName(_fromUtf8("horizontalLayout_5"))
         self.genericRadioBtn = QtGui.QRadioButton(self.horizontalWidget2)
         self.genericRadioBtn.setObjectName(_fromUtf8("genericRadioBtn"))
@@ -185,8 +184,8 @@ class Ui_MainWindow(object):
         self.horizontalWidget5 = QtGui.QWidget(self.gridFrame4)
         self.horizontalWidget5.setObjectName(_fromUtf8("horizontalWidget5"))
         self.horizontalLayout = QtGui.QHBoxLayout(self.horizontalWidget5)
-        self.horizontalLayout.setSpacing(10)
         self.horizontalLayout.setMargin(0)
+        self.horizontalLayout.setSpacing(10)
         self.horizontalLayout.setObjectName(_fromUtf8("horizontalLayout"))
         self.dataSetTree = QtGui.QTreeWidget(self.horizontalWidget5)
         self.dataSetTree.setStyleSheet(_fromUtf8("background-color: rgb(255, 255, 255);"))
@@ -239,8 +238,8 @@ class Ui_MainWindow(object):
         self.horizontalWidget6 = QtGui.QWidget(self.gridFrame5)
         self.horizontalWidget6.setObjectName(_fromUtf8("horizontalWidget6"))
         self.horizontalLayout_4 = QtGui.QHBoxLayout(self.horizontalWidget6)
-        self.horizontalLayout_4.setSpacing(6)
         self.horizontalLayout_4.setMargin(0)
+        self.horizontalLayout_4.setSpacing(6)
         self.horizontalLayout_4.setObjectName(_fromUtf8("horizontalLayout_4"))
         self.label = QtGui.QLabel(self.horizontalWidget6)
         font = QtGui.QFont()
