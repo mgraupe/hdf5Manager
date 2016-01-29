@@ -380,6 +380,7 @@ class hdf5Viewer(QMainWindow, Ui_MainWindow,InternalIPKernel):
         dataFileList = glob.glob('*.hdf5')
         dataFileList += glob.glob('*.h5')
         dataFileList += glob.glob('*.ma')
+        dataFileList += glob.glob('*.nwb')
         #print self.dataDirectory
         #print 'Data file list'
         #print dataFileList
