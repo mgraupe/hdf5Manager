@@ -16,8 +16,9 @@ import re
 import pickle
 from functools import partial
 
-from PyQt4.QtCore import *
-from PyQt4.QtGui import *
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
+from PyQt5.QtWidgets import *
 
 #from shapely.geometry import MultiPolygon, Polygon
 #from shapely.topology import TopologicalError
@@ -48,7 +49,7 @@ def hyphen_range(s):
             yield int(elem[0])
         elif len(elem) == 2: # a range inclusive
             start, end = map(int, elem)
-            for i in xrange(start, end+1):
+            for i in range(start, end+1):
                 yield i
         else: # more than one hyphen
             raise ValueError('format error in %s' % x)
@@ -75,7 +76,7 @@ class hdf5Viewer(QMainWindow, Ui_MainWindow,InternalIPKernel):
         try :
             h5Settings = pickle.load(open('.h5Settings.p','rb'))
         except IOError:
-            print 'No settings fils found.'
+            print('No settings fils found.')
             setExits = False
         else:
             setExits = True
@@ -95,7 +96,7 @@ class hdf5Viewer(QMainWindow, Ui_MainWindow,InternalIPKernel):
         self.dataSetTree.setColumnWidth(2, 100)
         self.dataSetTree.sortByColumn(0, Qt.AscendingOrder)
         
-        self.dataSetTree.header().setResizeMode(0, QHeaderView.Stretch)
+        self.dataSetTree.header().setSectionResizeMode(0, QHeaderView.Stretch)
         
         self.attributesTree.setSelectionMode(QAbstractItemView.ExtendedSelection)
         self.attributesTree.setColumnWidth(0, 260)
@@ -103,7 +104,7 @@ class hdf5Viewer(QMainWindow, Ui_MainWindow,InternalIPKernel):
         self.attributesTree.setColumnWidth(2, 70)
         self.attributesTree.sortByColumn(0, Qt.DescendingOrder)
         
-        self.attributesTree.header().setResizeMode(1, QHeaderView.Stretch)
+        self.attributesTree.header().setSectionResizeMode(1, QHeaderView.Stretch)
         
         
         #self.experimentAttributes.setColumnWidth(0, 140)
@@ -200,7 +201,7 @@ class hdf5Viewer(QMainWindow, Ui_MainWindow,InternalIPKernel):
         
         if len(dataDirNew)>0:
             #self.dataDirEdit.setText(dataDirNew)
-            print dataDirNew
+            print(dataDirNew)
             self.dataDirectory = dataDirNew + self.separator
             self.fillOutFileList() 
         
@@ -338,7 +339,7 @@ class hdf5Viewer(QMainWindow, Ui_MainWindow,InternalIPKernel):
             self.sframe = Slider(axframe, 'Frame #', 0, len(curItemList[0].value)-1, valinit=0,valfmt=u'%0.0f')
             # update function for the slider
             def update(val):
-                print val
+                print(val)
                 frame = np.around(self.sframe.val)
                 a1i.set_data(curItemList[0].value[frame,:,:])
                 #plt.show()
@@ -386,8 +387,9 @@ class hdf5Viewer(QMainWindow, Ui_MainWindow,InternalIPKernel):
         #print dataFileList
         
         for n in range(len(dataFileList)):
-            #print dataFileList[n]
+            print(dataFileList[n])
             ff = h5py.File(dataFileList[n], 'r')
+            print(ff)
             topnode = QTreeWidgetItem([ff.filename])
             f = QFont()
             f.setBold(True)
@@ -428,8 +430,8 @@ class hdf5Viewer(QMainWindow, Ui_MainWindow,InternalIPKernel):
                     tree_node.setTextAlignment (2, Qt.AlignLeft)
                     parent_node.addChild(tree_node)
                     if type(data) == h5py._hl.group.Group:
-                        for item in data.itervalues():
-                            recursivePopulateTree(tree_node, item, groupN)
+                        for item in data.keys():
+                            recursivePopulateTree(tree_node, data[item], groupN)
                 # add root
                 try:
                     lab = root.file.attrs['type']
@@ -439,14 +441,15 @@ class hdf5Viewer(QMainWindow, Ui_MainWindow,InternalIPKernel):
                     topnode.setData(2, Qt.DisplayRole, str(lab))
                 #
                 self.dataSetTree.addTopLevelItem(topnode)
-                for item in root.itervalues():
-                    recursivePopulateTree(topnode, item, groupN)
+                for item in root.keys():
+                    recursivePopulateTree(topnode, root[item], groupN)
             # show file name in red in case error occurs during hdf5 file parsing
             except (AttributeError, RuntimeError):
+                print(AttributeError)
                 textcolor = QColor("red")
-                topnode.setTextColor(0,textcolor)
-                topnode.setTextColor(1,textcolor)
-                topnode.setTextColor(2,textcolor)
+                topnode.setForeground(0,textcolor)
+                topnode.setForeground(1,textcolor)
+                topnode.setForeground(2,textcolor)
                 topnode.setData(2, Qt.DisplayRole, str("Problem in HDF5 format"))
                 self.dataSetTree.addTopLevelItem(topnode)
                 
@@ -468,7 +471,7 @@ class hdf5Viewer(QMainWindow, Ui_MainWindow,InternalIPKernel):
     def toggle_data_selection(self):
         
         treeItem = self.dataSetTree.currentItem()
-        
+        print(treeItem)
         try:
             item = treeItem.data(0, Qt.UserRole).toPyObject()
         except AttributeError:
@@ -477,6 +480,7 @@ class hdf5Viewer(QMainWindow, Ui_MainWindow,InternalIPKernel):
             self.currentSelectionValue.setText(item.file.filename+str(item.name))
             self.attributesTree.clear()
             def recursivePopulateAttributeTree(parent_node, att, col):
+                print(att[0],att[1])
                 tree_node = QTreeWidgetItem([att[0]])
                 #tree_node.setFlags(Qt.ItemIsEnabled)
                 #tree_node.setFlags(Qt.ItemIsEditable)
@@ -502,9 +506,9 @@ class hdf5Viewer(QMainWindow, Ui_MainWindow,InternalIPKernel):
                 topnode.setBackground( i , QColor(208, 230, 255) )
             self.attributesTree.addTopLevelItem(topnode)
             #self.dataSetTree.addTopLevelItem(1,'1')
-            for att in root.attrs.iteritems():
+            for attk,attv in root.attrs.items():
                 #print att[0], att[1]
-                recursivePopulateAttributeTree(topnode,att,(208, 230,255))
+                recursivePopulateAttributeTree(topnode,(attk,attv),(208, 230,255))
             # determine dept of selected item in terms of subdirectories
             selItem = {}
             levelN = 0
@@ -528,9 +532,9 @@ class hdf5Viewer(QMainWindow, Ui_MainWindow,InternalIPKernel):
                     tree_node.setBackground( n , QColor(col[0], col[1], col[2]) )
                 parent_node.insertChild(i,tree_node)
                 #tree_node.setData(1, Qt.DisplayRole, str(selItem[levelN-i].dtype))
-                for att in selItem[levelN-i].attrs.iteritems():
+                for attk,attv in selItem[levelN-i].attrs.items():
                     #print att[0], att[1] 
-                    recursivePopulateAttributeTree(tree_node,att,col)
+                    recursivePopulateAttributeTree(tree_node,(attk,attv),col)
                 #
                 #tree_node = QTreeWidgetItem([selItem[levelN-i].name])
                 #tree_node.setData(0, Qt.UserRole, selItem[topnode-i])
@@ -575,7 +579,7 @@ class hdf5Viewer(QMainWindow, Ui_MainWindow,InternalIPKernel):
         selItem = treeItem.data(0, Qt.UserRole).toPyObject()
         # save experiment attributes
         self.delExperimentAttributes(selItem)
-        for row in xrange(self.experimentAttributes.rowCount()):
+        for row in range(self.experimentAttributes.rowCount()):
             itemC0 = self.experimentAttributes.item(row, 0)
             itemC1 = self.experimentAttributes.item(row, 1)
             itemC2 = self.experimentAttributes.item(row, 2)
@@ -585,7 +589,7 @@ class hdf5Viewer(QMainWindow, Ui_MainWindow,InternalIPKernel):
         if (type(selItem) == h5py._hl.group.Group and not selItem.name == '/'):
             # group attributes
             self.delAttributes(selItem)
-            for row in xrange(self.groupAttributes.rowCount()):
+            for row in range(self.groupAttributes.rowCount()):
                 itemC0 = self.groupAttributes.item(row, 0)
                 itemC1 = self.groupAttributes.item(row, 1)
                 itemC2 = self.groupAttributes.item(row, 2)
@@ -594,14 +598,14 @@ class hdf5Viewer(QMainWindow, Ui_MainWindow,InternalIPKernel):
         elif type(selItem) == h5py._hl.dataset.Dataset:
             # data-set attributes
             self.delAttributes(selItem)
-            for row in xrange(self.dataSetAttributes.rowCount()):
+            for row in range(self.dataSetAttributes.rowCount()):
                 itemC0 = self.dataSetAttributes.item(row, 0)
                 itemC1 = self.dataSetAttributes.item(row, 1)
                 itemC2 = self.dataSetAttributes.item(row, 2)
                 self.saveAttributeFields(selItem,itemC0,itemC1,itemC2)
             # group attributes
             self.delAttributes(selItem.parent)
-            for row in xrange(self.groupAttributes.rowCount()):
+            for row in range(self.groupAttributes.rowCount()):
                 itemC0 = self.groupAttributes.item(row, 0)
                 itemC1 = self.groupAttributes.item(row, 1)
                 itemC2 = self.groupAttributes.item(row, 2)
@@ -709,7 +713,7 @@ class hdf5Viewer(QMainWindow, Ui_MainWindow,InternalIPKernel):
             h5Settings['dataDirectory'] = self.dataDirectory
             pickle.dump(h5Settings,open('.h5Settings.p','wb'))
         
-        print 'bye'
+        print('bye')
         self.cleanup_consoles()
         quit()
         event.accept()

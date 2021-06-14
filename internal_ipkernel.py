@@ -47,20 +47,21 @@ class InternalIPKernel(object):
 
     def new_qt_console(self, evt=None):
         """start a new qtconsole connected to our kernel"""
+        print(self.ipkernel.connection_file, self.ipkernel.profile)
         return connect_qtconsole(self.ipkernel.connection_file, profile=self.ipkernel.profile)
 
     def count(self, evt=None):
         self.namespace['app_counter'] += 1
     
     def addData(self, data, evt=None):
-	varN = 'var%s'%self.dataCounter
+        varN = 'var%s' % self.dataCounter
         self.namespace[varN] = data
         print("\nData imported as %s" % varN)
         self.dataCounter+=1
         sys.stdout.flush()
 
     def cleanup_consoles(self, evt=None):
-	print 'quitting'
+        print('quitting')
         for c in self.consoles:
             c.kill()
 
